@@ -1,4 +1,10 @@
+% !TEX root = main.tex
 \section{Introduction}
 \label{sec:Introduction}
-This is the introduction
+When designing any radio communication system, trade-offs has to be made between bandwidth, power, system complexity and bit rate. For a given bandwidth and transmit power, the bit rate could be varied be using different modulation schemes. As higher order modulation schemes require higher $\frac{E_b}{N_0}$, this would however require knowledge about the radio channel to maintain low enough BER at the receiver. This knowledge may be obtained by adding complexity in form of a feedback channel from receiver to transmitter. By performing some kind of error detection, the receiver may send information about obtained BER back to the transmitter. This enables system to adapt the data rate to the radio channel, and thus provide better QoS for given power and bandwidth. 
 
+In this paper, we present a radio communication system with this kind of feedback structure. The system is to be seen as a "proof of concept" and the goal is not to propose a complete radio system for commercial use. As the main goal of the system is to demonstrate this feedback feature and all design choices are made with this in mind. We chose for instance not to implement any source encoding because it is not necessary to fulfil the purpose of our system, but would be highly favourable in a commercial system. 
+
+The system is implemented using the software defined radio USRP-2901\cite{USRP2901} from National Instruments, which contains all necessary RF hardware. All the software parts of the system is implementing in C++ and is executed on a standard personal computer. Pre-written C-libraries are used for the parts of the system concerning interface to the USRP, the computer sound card etc. These parts will not be explained in detail, but references to the libraries will be given. For the remaining parts of the system, we focus on explaining the implementation on a behavioural level and detailed descriptions of C code implementations is avoided. 
+
+This paragraph will give tell the reader what to find in the remaining sections of the paper. 

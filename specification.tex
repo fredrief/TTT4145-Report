@@ -1,0 +1,29 @@
+% !TEX root = main.tex
+\section{Specifications}
+\label{sec:specifications}
+Some key specifications is listed in table \ref{tab:specs_short}. 
+\input{specs_short.tex}
+The values are listed for low / high data rate transmission. The system use the 2.4GHz ISM band with a carrier frequency of 2.415GHz. The system is designed for a transmission distance of 10 meter in an indoor environment with a bandwidth of \bw kHz. 
+
+The adaptable quality is obtained by implementing a feedback path from the receiver to the transmitter. Figure \ref{fig:block_toplevel} shows a top level block diagram of the proposed system. The figure shows that speech data is sent in the forward path from transmitter to receiver, and the number of detected errors is sent in the feedback path from receiver to transmitter. The forward and feedback paths will be referred to as the \textit{data path} and the \textit{BER path} respectively. Block diagrams for these subsystems is shown in appendix \ref{a:block_diagram} and the behaviour will be explained in the following subsection.
+\input{block_top_level.tex}
+
+The burst format is shown in figure \ref{fig:burst_format}. 
+\input{burst_format.tex}
+
+\subsection{Sound Producer and Sound Consumer}
+The blocks sound producer and sound consumer contains functionality for handling the sound input and output to the sound card of the computer. Sound producer reads sound samples at from the sound card at full quality, i.e. 16 bit, 44100 Hz stereo, and writes the samples to a queue accessible for the source encoder. Sound consumer equivalently reads sound samples from a queue controlled by the unpacking block and writes to the computer sound card.
+
+\subsection{Source Encoder}
+The source encoder performs lossy compression of the produced sound samples. The samples produced by sound producer are stored as 64 bit unsigned integers (u64) even though the resolution is only 16 bits. This means that the 48 least significant bits of each sample is zero. Depending on the state of the system (High or low quality transmission) the source encoder read several u64s and pack them into one single u64. Five or eight samples are packed into each u64 depending on the state (see details in table \ref{tab:specs}). In addition the sample rate are reduced by decimation with a factor of 2 or 4 for high and low quality respectively. 
+
+\subsection{Packing}
+Add header and write to packet queue. Need more info.
+
+\subsection{Forward Error Correction}
+The implemented FEC algorithm is Hamming (7,4). The implementation is a very fast, pre-written C-code.
+
+\subsection{Symbol Mapping}
+The system uses Grey Code for symbol mapping 
+
+

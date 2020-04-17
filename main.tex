@@ -1,24 +1,129 @@
 \documentclass[9pt,journal]{IEEEtran}
 \usepackage[utf8]{inputenc}
+\usepackage{cite}
+\usepackage[hidelinks]{hyperref}
+
+% Math
+\usepackage{amsmath}
+\DeclareMathOperator\erfc{erfc}
+
+% New commands
+\newcommand{\ebnot}{$E_b/N_0$}
+% -------------------------------- System variables ----------------------------- %
+\newcommand{\bw}{65}
+
+\newcommand{\headerBits}{11}
+\newcommand{\packetSataSymbols}{128}
+\newcommand{\packetDataBitsQPSK}{256}
+\newcommand{\packetDataBitsQAM}{768}
+
+\newcommand{\barkerSymbols}{26}
+\newcommand{\barkerBitsQPSK}{52}
+\newcommand{\barkerBitsQAM}{156}
+\newcommand{\frameSizeBitsQPSK}{319}
+\newcommand{\frameSizeBitsQAM}{935}
+
+\newcommand{\guardSymbols}{6}
+\newcommand{\guardBitsQPSK}{12}
+\newcommand{\guardBitsQAM}{36}
+\newcommand{\burstSizeBitsQPSK}{331}
+\newcommand{\burstSizeBitsQAM}{935}
+
+\newcommand{\systemBitRateQPSK}{187.39}
+\newcommand{\systemBitRateQAM}{572.67}
+\newcommand{\symbolRateQPSK}{93.69}
+\newcommand{\symbolRateQAM}{95.45}
+\newcommand{\minBWQPSK}{60.9}
+\newcommand{\minBWQAM}{62.0}
+
+% Data rates
+\newcommand{\rawDataRate}{1.4} %Mb/s
+\newcommand{\sourceDataRateQPSK}{88.2} % kb/s
+\newcommand{\sourceDataRateQAM}{246.6} % kb/s
+\newcommand{\packetDataRateQPSK}{95.8} % kb/s
+\newcommand{\packetDataRateQAM}{287.3} % kb/s
+\newcommand{\fecDataRateQPSK}{167.6} % kb/s
+\newcommand{\fecDataRateQAM}{502.8} % kb/s
+\newcommand{\symbolMapRateQPSK}{83.8} % ksymb/s
+\newcommand{\symbolMapRateQAM}{83.8} % ksymb/s
+\newcommand{\barkerRateQPSK}{100.1} % ksymb/s
+\newcommand{\barkerRateQAM}{100.6} % ksymb/s
+
+
+
+
+
+
+
+
+% For tables
+\usepackage[table]{xcolor}
+\usepackage{tabularx, booktabs}
+\usepackage{multirow}
+
+% Tikz
+\usepackage[europeanresistors,americaninductors, americancurrents, american voltages, siunitx]{circuitikz}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows, calc, automata, positioning, chains, decorations.markings}
+
+\usepackage{graphicx} % Figures/graphics
+\usepackage{float} % Floats, H
+% SUbfigures:
+\ifCLASSOPTIONcompsoc
+    \usepackage[caption=false, font=normalsize, labelfont=sf, textfont=sf]{subfig}
+\else
+\usepackage[caption=false, font=footnotesize]{subfig}
+\fi
 
 \title{Demonstration of Adaptable Quality Radio System for Broadcasting of Speech}
 \author{Martin Lima and Fredrik Esp Feyling }
 \date{April 2020}
 
-\usepackage{natbib}
-\usepackage{graphicx}
-
 \begin{document}
 
 \maketitle
 \begin{abstract} 
-We propose ... 
+This paper is presenting the design and implementation of a radio communication system for broadcasting of speech, with adaptable data rate. This system is to be seen as a "proof of concept", where the main goal is to demonstrate a radio system with feedback from receiver (RX) to transmitter (TX) such that the transmitted data rate adapts to the state of the radio channel, by evaluating the received bit error rate (BER). The data rate is varied by a factor 3 by switching between QPSK and QAM-64 modulation, while the bandwidth is fixed. 
 \end{abstract}
 
 % INTRODUCTION
 \input{introduction.tex}
 
+% SPECIFICATIONS
+\input{specification.tex}
 
-\bibliographystyle{plain}
-\bibliography{references}
+% LINK BUDGET 
+\input{link_budget_sec.tex}
+
+% DESIGN MOTIVATION
+\input{design_motivation.tex}
+
+% VERIFICATION
+\input{meas_and_verification.tex}
+
+% BIBLIOGRAPHY
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv, references}
+
+% APPENDICES
+\appendices
+\section{System specifications}
+\label{a:specs}
+\input{specs.tex}
+
+\section{Link Budget}
+\label{a:link_budget}
+\input{link_budget.tex}
+
+\section{Block Diagram}
+\label{a:block_diagram}
+\input{block_diagram.tex}
+\input{block_diagram_feedback.tex}
+
+\section{Symbol Mapping Scheme}
+\label{a:symbol_mapping}
+\input{symbol_mapping.tex}
+
+
+
 \end{document}

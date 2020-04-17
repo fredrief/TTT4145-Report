@@ -1,0 +1,19 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Specifications}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Sound Producer and Sound Consumer}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Source Encoder}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{Packing}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.4}{Forward Error Correction}{section.2}% 6
+\BOOKMARK [2][-]{subsection.2.5}{Symbol Mapping}{section.2}% 7
+\BOOKMARK [1][-]{section.3}{Link Budget}{}% 8
+\BOOKMARK [2][-]{subsection.3.1}{TX and RX Loss}{section.3}% 9
+\BOOKMARK [2][-]{subsection.3.2}{Path Loss}{section.3}% 10
+\BOOKMARK [2][-]{subsection.3.3}{RX Noise}{section.3}% 11
+\BOOKMARK [2][-]{subsection.3.4}{RX Properties}{section.3}% 12
+\BOOKMARK [1][-]{section.4}{Design Motivation}{}% 13
+\BOOKMARK [1][-]{section.5}{Measurements and Verification}{}% 14
+\BOOKMARK [1][-]{section*.1}{References}{}% 15
+\BOOKMARK [1][-]{section*.2}{Appendix A: System specifications}{}% 16
+\BOOKMARK [1][-]{section*.3}{Appendix B: Link Budget}{}% 17
+\BOOKMARK [1][-]{section*.4}{Appendix C: Block Diagram}{}% 18
+\BOOKMARK [1][-]{section*.5}{Appendix D: Symbol Mapping Scheme}{}% 19
