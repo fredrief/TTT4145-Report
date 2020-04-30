@@ -1,7 +1,7 @@
 % !TEX root = main.tex
 \begin{figure} 
     \centering
-  \subfloat[\label{1a}]{%
+  \subfloat[QPSK data package\label{1a}]{%
 \begin{tikzpicture}[                
                     slot/.style={
             		text centered,
@@ -25,7 +25,7 @@
 \end{tikzpicture}
 }
   \\
-  \subfloat[\label{1b}]{%
+  \subfloat[QAM-64 data package\label{1b}]{%
 \begin{tikzpicture}[                
                     slot/.style={
             		text centered,
@@ -47,6 +47,27 @@
 ;	
 
 \end{tikzpicture}}
-  \caption{Burst format for QPSK (a) and QAM-64 (b) modulation}
-  \label{fig1} 
+\\
+  \subfloat[QPSK BER package\label{1c}]{%
+\begin{tikzpicture}[                
+                    slot/.style={
+            		text centered,
+			font=\scriptsize,
+			align=center,
+			anchor=center,
+			minimum height=0.7cm
+            	}]
+\draw[thick] (0,0) rectangle (\linewidth, -0.7);
+\draw[thick] (0.70\linewidth,0) -- ++(0, -0.7);
+\draw[thick] (0.82\linewidth,0) -- ++(0, -0.7);
+
+\draw
+(0,0) node[slot, minimum width=0.7\linewidth, anchor=north west](barker){Training sequence \\ \barkerBitsQPSK}
+(0.70\linewidth,0)  node[slot, minimum width=0.12\linewidth, anchor=north west](barker){Header \\ \headerBits}
+(0.82\linewidth,0) node[slot, minimum width=0.18\linewidth, anchor=north west](barker){BER data \\ \BERDataBits}
+;	
+
+\end{tikzpicture}}
+  \caption{Burst format for QPSK(a) and QAM-64(b) modulated data bursts, and QPSK modulated BER burst (c)}
+  \label{fig:burst_format} 
 \end{figure}

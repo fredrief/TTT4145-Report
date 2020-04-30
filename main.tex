@@ -2,18 +2,42 @@
 \usepackage[utf8]{inputenc}
 \usepackage{cite}
 \usepackage[hidelinks]{hyperref}
+\usepackage[shortlabels]{enumitem}
 
 % Math
 \usepackage{amsmath}
 \DeclareMathOperator\erfc{erfc}
 
+% For tables
+\usepackage[table]{xcolor}
+\usepackage{tabularx, booktabs}
+\usepackage{multirow}
+
+% Tikz
+\usepackage[europeanresistors,americaninductors, americancurrents, american voltages, siunitx]{circuitikz}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows, calc, automata, positioning, chains, decorations.markings, calc, patterns, angles, quotes}
+
+\usepackage{graphicx} % Figures/graphics
+\usepackage{float} % Floats, H
+% Subfigures:
+\ifCLASSOPTIONcompsoc
+    \usepackage[caption=false, font=normalsize, labelfont=sf, textfont=sf]{subfig}
+\else
+\usepackage[caption=false, font=footnotesize]{subfig}
+\fi
+
 % New commands
 \newcommand{\ebnot}{$E_b/N_0$}
+\renewcommand{\Re}{\text{Re}}
+\renewcommand{\Im}{\text{Im}}
+
 % -------------------------------- System variables ----------------------------- %
 \newcommand{\bw}{65}
+\newcommand{\MainCarrierFreq}{2415} %MHz
 
 \newcommand{\headerBits}{11}
-\newcommand{\packetSataSymbols}{128}
+\newcommand{\packetDataSymbols}{128}
 \newcommand{\packetDataBitsQPSK}{256}
 \newcommand{\packetDataBitsQAM}{768}
 
@@ -49,31 +73,21 @@
 \newcommand{\barkerRateQPSK}{100.1} % ksymb/s
 \newcommand{\barkerRateQAM}{100.6} % ksymb/s
 
+\newcommand{\packetRate}{566,1} % Packet/sec
+
+% BER Feedback path
+\newcommand{\BERDataBits}{8}
+\newcommand{\BERFrameSize}{71}
+
+\newcommand{\BERCarrierFreq}{2420} %MHz
+\newcommand{\BERDataRate}{42.5} % kb/s
+\newcommand{\BERSymbolRate}{100} %ksymb/s
+
+% Frequency sync
+\newcommand{\bfsInterval}{0.0037}
 
 
-
-
-
-
-
-% For tables
-\usepackage[table]{xcolor}
-\usepackage{tabularx, booktabs}
-\usepackage{multirow}
-
-% Tikz
-\usepackage[europeanresistors,americaninductors, americancurrents, american voltages, siunitx]{circuitikz}
-\usepackage{tikz}
-\usetikzlibrary{shapes,arrows, calc, automata, positioning, chains, decorations.markings}
-
-\usepackage{graphicx} % Figures/graphics
-\usepackage{float} % Floats, H
-% SUbfigures:
-\ifCLASSOPTIONcompsoc
-    \usepackage[caption=false, font=normalsize, labelfont=sf, textfont=sf]{subfig}
-\else
-\usepackage[caption=false, font=footnotesize]{subfig}
-\fi
+% ---------------------------------- DOCUMENT ------------------------------------------------- %
 
 \title{Demonstration of Adaptable Quality Radio System for Broadcasting of Speech}
 \author{Martin Lima and Fredrik Esp Feyling }
@@ -92,6 +106,9 @@ This paper is presenting the design and implementation of a radio communication 
 % SPECIFICATIONS
 \input{specification.tex}
 
+% DESIGN DESCRIPTION
+\input{design_description.tex}
+
 % LINK BUDGET 
 \input{link_budget_sec.tex}
 
@@ -107,13 +124,6 @@ This paper is presenting the design and implementation of a radio communication 
 
 % APPENDICES
 \appendices
-\section{System specifications}
-\label{a:specs}
-\input{specs.tex}
-
-\section{Link Budget}
-\label{a:link_budget}
-\input{link_budget.tex}
 
 \section{Block Diagram}
 \label{a:block_diagram}

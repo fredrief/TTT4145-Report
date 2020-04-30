@@ -1,4 +1,16 @@
+% !TEX root = main.tex
 \section{Design Motivation}
 \label{sec:design_motivation}
+The goal of the proposed system is to demonstrate a radio communication system with adaptable sound quality. This main goal is the background for all design choices that is made. In this system, the motivation behind the solutions described in section \ref{sec:design_description} is given.
 
-As stated in section \ref{sec:introduction}, the purpose of the proposed system is to demonstrate a radio system with adaptable data rate and this is the background for all design choices that is made. 
+\subsection{Choice of modulation scheme}
+The system uses QPSK for low data rate transmission and QAM-64 for high data rate transmission. QPSK has the advantage of constant symbol amplitude and therefore reduces nonlinear effects in the amplifiers. Because of the orthogonality between the I and Q signals, QPSK also gives twice the capacity as BPSK for same $E_b/N_0$ sensitivity. 
+
+When choosing modulation scheme for high data rate, our main concern was the so-called "waterfall shape" of the $\text{BER}
+vs. E_b/N_0$-curves. When the system switches from high quality to low quality, we want a large margin before the link is broken. Thus we 
+
+
+\subsection{Source Encoder/Decoder}
+We chose not to implement any source encoding except for the primitive reduction of data rate. A source encoder removes redundancy in the speech data and increase the information content of every transmitted symbol. This functionality is not necessary to demonstrate the adaptable quality and is therefore not implemented. 
+
+The source encoder also makes the system more sensitive to bit errors, as the information content in each bit is increased. Our system is designed to operate at $E_b / N_0$ low enough to demonstrate the quality adaption. When the received $E_b / N_0$ falls low enough to make the system change from QAM-64 to QPSK modulation, we would like the system to have a large margin before the BER for QPSK also get too high and the link is broken. Using a source encoder would make this window smaller and the system would be harder to demonstrate. 

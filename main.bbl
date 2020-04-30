@@ -25,6 +25,10 @@
 {National Instruments}, ``Usrp-2901 specifications - national instruments,''
   \url{https://www.ni.com/pdf/manuals/374925c.pdf}, (Accessed on 04/16/2020).
 
+\bibitem{hamming}
+M.~Dipperstein, ``Hamming (7,4) code discussion and implementation,''
+  \url{http://michael.dipperstein.com/hamming/}, (Accessed on 04/20/2020).
+
 \bibitem{rfconnector}
 {TE Connectivity}, ``Rf coaxial connectors,''
   \url{https://www.mouser.com/datasheet/2/418/NG_DS_1-1773725-8_RF_COAX_QRG_0114_TE-1948_RFcoaxi-1232379.pdf},

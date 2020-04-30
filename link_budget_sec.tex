@@ -3,6 +3,8 @@
 \label{sec:link_budget}
 The link budget for the system is shown in table \ref{tab:link_budget}. As the purpose of the system is to demonstrate the feedback feature, the system is designed for the test environment only, which is reflected in the link budget. The system is designed to operate indoors with a distance of 10 meters between transmitter and receiver. Table \ref{tab:link_budget} shows losses from path loss, loss in TX and RX and some estimated key parameters at the receiver, such as $E_b/N_0$ and BER. 
 
+\input{link_budget.tex}
+
 As the system is designed to switch between two different modulation formats the received \ebnot should not be carefully tuned. The link budget is designed such that the \ebnot is mostly good enough for QAM-64 modulation under line of sight (LOS), but forces the system to switch to QPSK if the LOS is lost. 
 
 The different parts of the link budget will be discussed in this section.

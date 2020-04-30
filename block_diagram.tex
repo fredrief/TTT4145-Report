@@ -23,14 +23,16 @@
 		}, ]
 	
 % ------ USRP ------- %
-\filldraw[fill=black!20!white, draw=black!20!white, opacity=0.5] (13, 1.5) rectangle (15,-6.5);
-\draw (14, 1.5) node[anchor=north, align=center]{RF \\ Hardware};
+\filldraw[fill=black!20!white, draw=black!20!white, opacity=0.5] (13, 2.5) rectangle (15,-6.5);
+\draw (14, 2.5) node[anchor=north, align=center]{RF \\ Hardware};
 
 % -------- TX --------- %
-\filldraw[fill=black!10!white, draw=black!10!white, opacity=0.5] (-1,1.5) rectangle (13,-1);
-\draw (-1,1.5) node[anchor=north west]{TX - Software};
+\filldraw[fill=black!10!white, draw=black!10!white, opacity=0.5] (-2.5,2.5) rectangle (13,-1);
+\draw (-2.5,2.5) node[anchor=north west]{TX - Software};
 % Draw boxes
 \draw 
+(6, 1.5) node[box, minimum width=7cm, font=\footnotesize](state){Session State}
+
 (0,0) node[box](sound_prod){Sound \\ producer} 
 (2,0) node[box](source_enc){Source \\ encoder} 
 (4,0) node[box](packing_tx){Packing} 
@@ -41,6 +43,7 @@
 (14,0) node[box](usrp_tx){USRP \\ TX} 
 ;
 
+
 \draw [->, thick] (sound_prod.east) -- node[above, font=\tiny, align=center]{\rawDataRate} node[below, font=\tiny, align=center]{Mb/s} (source_enc.west);
 \draw [->, thick] (source_enc.east) -- node[above, font=\tiny, align=center]{\sourceDataRateQPSK /  \\ \sourceDataRateQAM} node[below, font=\tiny, align=center]{kb/s} (packing_tx.west);
 \draw [->, thick] (packing_tx.east) -- node[above, font=\tiny, align=center]{\packetDataRateQPSK /  \\ \packetDataRateQAM} node[below, font=\tiny, align=center]{kb/s} (fec_tx.west);
@@ -49,13 +52,20 @@
 \draw [->, thick] (barker_tx.east) -- node[above, font=\tiny, align=center]{\barkerRateQPSK /  \\ \barkerRateQAM} node[below, font=\tiny, align=center]{ksymb/s} (pulse_shape_tx.west);
 \draw [->, thick] (pulse_shape_tx.east) -- (usrp_tx.west);
 
+% State lines
+\draw [->, thick] (state.south) ++(-3, 0) -- ++(0, -0.2) -| (source_enc.north);
+\draw [<-, thick] (packing_tx.north) -- ++(0, 0.5); 
+\draw [<-, thick] (symbol_mapping_tx.north) -- ++(0, 0.5); 
+\draw [->, thick] (state.south) ++(3, 0) -- ++(0, -0.2) -| (barker_tx.north);
+
 
 % -------- RX --------- %
-\filldraw[fill=black!10!white, draw=black!10!white, opacity=0.5] (-1,-1.5) rectangle (13,-6.5);
-\draw (-1,-1.5) node[anchor=north west]{RX - Software};
+\filldraw[fill=black!10!white, draw=black!10!white, opacity=0.5] (-2.5,-1.5) rectangle (13,-6.5);
+\draw (-2.5,-1.5) node[anchor=north west]{RX - Software};
 % Draw boxes
 \draw 
-(0,-3) node[box](sound_cons){Sound \\ consumer} 
+(-1.5,-3) node[box](sound_cons){Sound \\ consumer} 
+(0,-3) node[box](source_decode){Source \\ decoder} 
 (1.5,-3) node[box](unpack_rx){Unpacking} 
 (3,-3) node[box](fec_rx){FEC \\ decoding} 
 (4.5,-3) node[box](demap_rx){De- \\ mapping} 
@@ -81,7 +91,8 @@
 \draw [->, thick] (freq_sync_rx.west) -- (demap_rx.east);
 \draw [->, thick] (demap_rx.west) -- (fec_rx.east);
 \draw [->, thick] (fec_rx.west) -- (unpack_rx.east);
-\draw [->, thick] (unpack_rx.west) -- (sound_cons.east);
+\draw [->, thick] (unpack_rx.west) -- (source_decode.east);
+\draw [->, thick] (source_decode.west) -- (sound_cons.east);
 
 \coordinate [below of=demap_rx, xshift=0.2cm, yshift=0.5cm](qpsk_in) {};
 \coordinate [below of=demap_rx, xshift=-0.2cm, yshift=0.5cm](qam_in) {};
