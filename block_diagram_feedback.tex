@@ -6,8 +6,8 @@
             		draw,
 			thick,
             		text centered,
-            		minimum width=1cm,
-            		minimum height=1cm,
+            		minimum width=0.8cm,
+            		minimum height=0.8cm,
 			font=\scriptsize,
 			align=center,
 			anchor=center,
@@ -16,9 +16,9 @@
 			diamond,
 			thick,
 			align=center,
-            		minimum width=1cm,
-            		minimum height=1cm,
-			font=\scriptsize,
+            		minimum width=0.8cm,
+            		minimum height=0.8cm,
+			font=\tiny,
 			anchor=center,	
 		}, ]
 	
@@ -27,12 +27,14 @@
 \draw (14, 1.5) node[anchor=north, align=center]{RF \\ Hardware};
 
 % -------- TX --------- %
-\filldraw[fill=black!10!white, draw=black!10!white, opacity=0.5] (-1.5,1.5) rectangle (13,-1);
+\filldraw[fill=black!10!white, draw=black!10!white, opacity=0.5] (-1.5,1.5) rectangle (13,-6.5);
 \draw (-1.5,1.5) node[anchor=north west]{TX - Software};
 % Draw boxes
 \draw 
-(4,0) node[](detected_errors){} 
-(6,0) node[box](packing_tx){Packing} 
+(0,0) node[](detected_errors){} 
+(2,0) node[box](packing_tx){Packing} 
+(4,0) node[box](scramble_tx){Scrambler} 
+(6,0) node[box](fec_tx){FEC} 
 (8,0) node[box](symbol_mapping_tx){Symbol \\ mapping} 
 (10,0) node[box](barker_tx){Add \\ Barker} 
 (12,0) node[box](pulse_shape_tx){Pulse \\ shaping} 
@@ -40,22 +42,24 @@
 ;
 
 \draw [->, thick] (detected_errors.east) -- node[above, font=\footnotesize, align=center]{Detected \\ Errors} (packing_tx.west);
-\draw [->, thick] (packing_tx.east) -- (symbol_mapping_tx);
+\draw [->, thick] (packing_tx.east) -- (scramble_tx.west);
+\draw [->, thick] (scramble_tx.east) -- (fec_tx.west);
+\draw [->, thick] (fec_tx.east) -- (symbol_mapping_tx.west);
 \draw [->, thick] (symbol_mapping_tx.east) --  (barker_tx.west);
 \draw [->, thick] (barker_tx.east) -- (pulse_shape_tx.west);
 \draw [->, thick] (pulse_shape_tx.east) -- (usrp_tx.west);
 
 
 % -------- RX --------- %
-\filldraw[fill=black!10!white, draw=black!10!white, opacity=0.5] (-1.5,-1.5) rectangle (13,-6.5);
 \draw (-1.5,-1.5) node[anchor=north west]{RX - Software};
 % Draw boxes
 \draw
-(3,-3) node[box](unpack_rx){Unpacking} 
-(4.5,-3) node[box](demap_rx){De- \\ mapping} 
-(6,-3) node[box](freq_sync_rx){Frequency \\ and \\ phase \\ sync} 
-(7.5,-3) node[box](frame_sync_rx){Frame \\ sync} 
-(9,-3) node[box](bfs_rx){Blind \\ frequency \\ search} 
+(1.5,-3) node[box](unpack_rx){Unpacking} 
+(3,-3) node[box](scramble_rx){Scrambler} 
+(4.5,-3) node[box](fec_rx){FEC \\ decoding} 
+(6,-3) node[box](demap_rx){De- \\ mapping} 
+(7.5,-3) node[box](freq_sync_rx){Frequency \\ and \\ phase \\ sync} 
+(9,-3) node[box](frame_sync_rx){Frame \\ sync} 
 (10.5,-3) node[box](symb_sync_rx){Symbol \\ sync} 
 (12,-3) node[box](filter_rx){Matched \\ filter} 
 (14,-3) node[box](usrp_rx){USRP \\ RX} 
@@ -63,19 +67,20 @@
 
 \draw [->, thick] (usrp_tx.south) -- ++ (-0.1, -1) -- ++(0.2, 0.2) node[right, align=center, font=\scriptsize, anchor=west, xshift=-0.2cm, yshift=0.1cm]{Detected \\ errors} -- (usrp_rx.north);\draw [->, thick] (usrp_rx.west) -- (filter_rx.east);
 \draw [->, thick] (filter_rx.west) -- (symb_sync_rx.east);
-\draw [->, thick] (symb_sync_rx.west) -- (bfs_rx.east);
-\draw [->, thick] (bfs_rx.west) -- (frame_sync_rx.east);
+\draw [->, thick] (symb_sync_rx.west) -- (frame_sync_rx.east);
 \draw [->, thick] (frame_sync_rx.west) -- (freq_sync_rx.east);
 \draw [->, thick] (freq_sync_rx.west) -- (demap_rx.east);
-\draw [->, thick] (demap_rx.west) -- (unpack_rx.east);
-
+\draw [->, thick] (demap_rx.west) -- (fec_rx.east);
+\draw [->, thick] (fec_rx.west) -- (scramble_rx.east);
+\draw [->, thick] (scramble_rx.west) -- (unpack_rx.east);
 \draw[->, thick] (demap_rx.south) ++(1, -0.7) -- node[above, font=\scriptsize]{QPSK} ++(-1, 0) -- (demap_rx.south);
 
-\node [decision, left of=unpack_rx, xshift=-0.8cm] (change_state) {Change \\ state?};
+
+\node [decision, below of=unpack_rx, yshift=-0.5cm] (change_state) {Change \\ state?};
 \node [box, below of=change_state, yshift=-0.5cm, minimum height=0] (do_nothing) {Do nothing};
 \node [box, left of=change_state, xshift=-0.8cm, minimum height=0] (do_change) {Change \\ state};
 
-\draw [->, thick] (unpack_rx.west) -- (change_state.east);
+\draw [->, thick] (unpack_rx.south) -- (change_state.north);
 \draw [->, thick] (change_state.south) -- node[right, font=\scriptsize, yshift=3]{No} (do_nothing.north);
 \draw [->, thick] (change_state.west) -- node[above, font=\scriptsize]{Yes} (do_change.east);
 

@@ -1,76 +1,58 @@
 % !TEX root = main.tex
 \section{Design Description}
 \label{sec:design_description}
-Figure \ref{fig:block_toplevel} shows how the transmitter and receiver communicates within the system. Block diagrams for the two subsystems is shown in appendix \ref{a:block_diagram}, figure \ref{fig:block_diagram} and \ref{fig:block_diagram_feedback}. The behaviour will be explained in this section. 
+Figure \ref{fig:block_toplevel} shows how the transmitter and receiver communicates within the system. Block diagrams for the two subsystems is shown in appendix \ref{a:block_diagram}, figure \ref{fig:block_diagram} and \ref{fig:block_diagram_feedback}. The data rate between each block is indicated with the thin arrows. The behaviour of the system will be explained in this section. 
 
-Because two different modulation schemes are used, the receiver need to know how to decode the incoming data packets. This problem is solved by using two different training sequences, both of length \barkerSymbols symbols. The training sequence is an appropriate repetition of barker sequences of length 7 and 13, for QPSK and QAM-64 modulation respectively. As shown in figure \ref{fig:block_diagram}, after frame sync, the receiver perform a check on which barker sequence that was transmitted before de-mapping the symbols. 
+Because two different modulation schemes are used, the receiver need to know how to decode the incoming data packets. This problem is solved by using two different training sequences, both of length \barkerSymbols\   symbols. The training sequence is an appropriate repetition of barker sequences of length 7 and 13, for QPSK and QAM-64 modulation respectively. As shown in figure \ref{fig:block_diagram}, after frame sync, the receiver perform a check on the received barker sequence before de-mapping the symbols. 
 
-In the transmitter, a variable called \textit{Session State} keep the information about what data quality and modulation scheme to use. As figure \ref{fig:block_diagram} indicates, the session state influences several blocks of the TX side in the transmitter. As shown in figure \ref{fig:block_diagram_feedback}, the decision of when to change data quality is left completely to the transmitter. For every received data package, the receiver computes the number of detected errors and transmit this number back to the transmitter. As the figure indicates, these BER packages are always transmitted using QPSK-modulation and no FEC is used. Based on the received number of detected errors as well as previous error detections, the transmitter decides whether to change session state or not. 
+In the transmitter, a variable called \textit{Session State} keep the information about what data quality and modulation scheme to use. As figure \ref{fig:block_diagram} indicates, the session state influences several blocks of the TX side of the transmitter. The decision of when to change data quality is left completely to the transmitter. For every received data package, the receiver computes the number of detected errors and transmit this number back to the transmitter. These BER packages are always transmitted using QPSK-modulation. Based on the received number of detected errors as well as previous error detections, the transmitter decides whether to change session state or not. 
 
-In the following subsections, all components of the data path and BER path systems will be described in detail.   
-\subsection{Sound Producer and Sound Consumer}
-The blocks sound producer and sound consumer contains functionality for handling the sound input and output to the sound card of the computer. Sound producer reads sound samples at from the sound card at full quality, i.e. 16 bit, 44100 Hz stereo, and writes the samples to a queue accessible for the source encoder. Sound consumer equivalently reads sound samples from a queue controlled by the unpacking block and writes to the computer sound card.
+The sound producer and sound consumer contains functionality for handling the sound input and output to the sound card of the computer. They are implemented using the Windows API \cite{WinAPI}. Sound producer reads sound samples from the sound card at full quality (16 bit, 44100 Hz stereo) and writes the samples to a queue accessible for the source encoder. Sound consumer equivalently reads sound samples from a queue controlled by the unpacking block and writes to the computer sound card. 
 
-\subsection{Source Encoder/Decoder}
-The source encoder performs lossy compression of the produced sound samples. The samples produced by sound producer are stored as 64 bit unsigned integers (u64) even though the resolution is only 16 bits. This means that the 48 least significant bits of each sample is zero. Depending on the state of the system (High or low quality transmission) the source encoder read several u64s and pack them into one single u64. Five or eight samples are packed into each u64 depending on the state (see details in table \ref{tab:specs_data}). In addition the sample rate are reduced by decimation with a factor of 2 or 4 for high and low quality respectively. 
+The source encoder performs lossy compression of the produced sound samples. The bit resolution is reduced to 12 bit per sound sample, and the sampling rate is reduced by a factor 2 or 4 depending on the session state. The source decoder performs the inverse operation, writing 2 or 4 copies of the same sample to the sound consumer.  
 
-The source decoder performs the inverse operation, writing 2 or 4 copies of the same sample as u64's to the sound consumer.  
+In the packing block, sound data is read from the source encoder, a header is added, and the packet is sent to the packet queue. The eight bit packet header consist of a three bit session ID and a five bit packet ID. 
 
-\subsection{Packing}
-Add header and write to packet queue. Need more info.
+A scrambler is implemented before FEC, which computes a bitwise XOR between a pseudo random bit string and the packet. The bit string used for scrambling is of the same size as the packet itself. The scrambler performs the exact same operation at RX and TX.
 
-\subsection{Forward Error Correction}
 The implemented FEC algorithm is Hamming (7,4). The implementation is a fast, pre-written C-code, written by Michael Dipperstein \cite{hamming}. 
 
-\subsection{Symbol Mapping}
-The system uses Grey Code for mapping the binary data to a complex vector $z$. For a two bit sequence $b_1b_0$, with $b_0$ as the least significant bit, the QPSK mapping is obtained by equation \ref{eq:symbol_map_qpsk1} and \ref{eq:symbol_map_qpsk2}. 
-\begin{align}
-\Re[z_{qpsk}] = (-2b_0+1) \label{eq:symbol_map_qpsk1} \\ 
-\Im[z_{qpsk}] = (-2b_1+1) \label{eq:symbol_map_qpsk2}
-\end{align}
+The system uses Grey Code for mapping the binary data to a complex vector $z$. The mapping schemes are shown in figure \ref{fig:mapping}.
 
-For a 6 bit sequence $b_5b_4b_3b_2b_1b_0$ the mapping to QAM-64 is obtained by equation \ref{eq:symbol_map_qam1} and \ref{eq:symbol_map_qam2}
-\begin{align}
-\Re[z_{qam64}] = (2b_5-1) \cdot [(-2b_3+1) \cdot (-2b_5+3) +4] \label{eq:symbol_map_qam1} \\ 
-\Im[z_{qam64}] = (2b_6-1) \cdot [(-2b_4+1) \cdot (-2b_6+3) +4]\label{eq:symbol_map_qam2}
-\end{align}
+\input{symbol_mapping.tex}
 
-The resulting constellations from these mappings are shown in figure \ref{fig:qpsk_mapping} and \ref{fig:qam_mapping} in appendix \ref{a:symbol_mapping}.
+The training sequence is added to both I and Q symbols in the block \textit{Add Barker}. As previously described, the training sequence is a barker sequence of length 7 or 13 depending on the session state. In either case the total length of the training sequence is \barkerSymbols symbols, which means that the barker sequence is repeated to obtain the desired length. 
 
-\subsection{Training sequence}
-The training sequence is added to the transmitted packet in the block \textit{Add Barker} on figure \ref{fig:block_diagram}. As previously described, the training sequence is a barker sequence of length 7 or 13 depending on the session state. In either case the total length of the training sequence is \barkerSymbols symbols, which means that the barker sequence is repeated to obtain the desired length. 
+In the last step before transmission, the symbols are upsampled by a factor $\sps$ and filtered with a pulse shaping filter. The filter is Root Raised Cosine with a roll-off factor of 0.3. The same filter is applied as a matched filter in the first step at the receive side before the samples are downsampled again. 
 
-\subsection{Pulse shaping}
-The pulse shaping filter is applied in the last step before transmission, and is of the type Root Raised Cosine, with a Roll-off factor of 0.3. The same filter is applied as a matched filter in the first step after reception at the receive side. 
+The USRP is configured to transmit continuously with a symbol rate of $\symbolRateQPSK$ symbols per second and transmit arrays of zeros when no data is available. The USRP interface is implemented using the NI-USRP DLL \cite{labviewDLL}.
 
-\subsection{Symbol synchronisation}
-Pulse align. Need info.
+Symbol synchronisation is done by choosing the sample offset that maximizes the signal energy. 
 
-\subsection{Frequency synchronisation}
-The implemented frequency synchronisation is a combination two algorithms; blind frequency search and the Mth-power algorithm. The blind frequency search algorithm is applied before frame synchronisation and provides a rough estimate of frequency offset. The purpose of this block is to ensure that the phase drift of the training symbols is small enough before frame synchronisation. The blind frequency search is done by applying a fixed set of frequency offsets to the input symbols and then computing the cross correlation between the input symbols and the two training sequences. The frequency offset yielding the highest value for the cross correlation gives the best estimate for the frequency offset. This way, the remaining frequency offset for the frame sync is ensured to be within an interval small enough for the frame synchronisation algorithm to work. 
+Frame synchronisation is done by computing the crosscorrelation between the two training sequences and the received symbols. The value of the crosscorrelation is compared to a pre set threshold. The first index that gives a value exceeding this threshold is considered to be the beginning of the frame. After a frame is found, only the frame symbols are passed along to the next block.
 
-The Mth-power algorithm is applied after frame synchronisation and does both frequency and phase offset estimation. The algorithm operates on the training sequence only. The algorithm is based on mapping all symbols to the same point in the complex plane by raising each symbol to the 4th power. With out any phase or frequency shift, each symbol of the training sequence should be mapped to the point(-1, 0). The phase estimate of the acquired symbol is then $1/4$th of the angular deviation from this point. This is illustrated in figure \ref{fig:mth_pow}. The frequency offset is estimated by tracking deviation in phase. 
+\subsection{Frequency and Phase Synchronisation}
+The implemented frequency synchronisation algorithm is based on the Mth-power algorithm, which is further improved by using a Kalman filter. Frequency offset is estimated from the training sequence only. The Mth-power algorithm estimates the phase offset of MPSK modulated symbols, by mapping all symbols to the same point in the complex plane. By tracking the angular difference between consecutive symbols, the frequency offset may be estimated. In our case, the QPSK symbols of the training sequence is raised to the 4th power, and the phase is estimated as indicated in figure \ref{fig:mth_pow}.
 \input{mth_power.tex}
-The implemented Mth-power algorithm is executed in four stages. 
-\begin{enumerate}[a)]
-\item
-Estimate frequency offset by calculating the average phase difference between two adjacent symbols. 
 
-\item
-Estimate phase offset by first subtracting the estimated frequency offset from each sample, then calculate the average phase offset.
+For each received frame, the frequency offset is estimated by the mean of the angular difference between all consecutive symbols of the training sequence. The estimate obtained from a single frame at time $k$  is referred to as $\widetilde{\omega}_k$.  
 
-\item
-The above phase estimate is limited to $[0, \frac{\pi}{2}]$, so the phase offset need to be moved to the correct quadrant. Because the first symbol in the training sequence is always $1+i$, an angle of $\pi/2$ is added to the the phase estimate until the first symbol is mapped to the first quadrant. 
+The accuracy of the estimate is improved by using a Kalman filter. The state of the Kalman filter is the one-dimensional state vector $\omega_k$ which is the true frequency offset between the transmitter and the receiver at time $k$ (i.e. frame $k$). The state is represented by the \textit{a posteriori} state and variance estimate $\widehat{\omega}_{k | k}$ and $\widehat{\sigma}_{k | k}$, where the subscript $n | m$ indicates the estimate of time $n$ given observations up to and including time $m \leq n$. 
 
-\item
-Apply the estimated phase and frequency to all remaining symbols. 
-\end{enumerate}
+The estimate is obtained in two stages, referred to as the \textit{prediction stage} and the \textit{update stage}. In the prediction stage, the \textit{a priori} estimates $\widehat{\omega}_{k | k-1}$ and $\widehat{\sigma}_{k | k-1}$ is obtained by equations \ref{eq:kalman_pred_wk} and \ref{eq:kalman_pred_sigmak}. $\sigma_f$ is the stationary variance of the process noise and must be tuned carefully in order to obtain appropriate convergence speed. In our system $\sigma_f$ was set to $0.8\cdot 10^{-6}$.  
 
-\subsection{Frame synchronisation}
-Frame synchronisation is done by computing the crosscorrelation between the two training sequences and the received symbols. Value of the crosscorrelation is compared to a pre set threshold of 13. The first index that gives a value exceeding this threshold is considered to be the beginning of the frame. 
-NEED MORE INPUT
+\begin{gather}
+\widehat{\omega}_{k | k-1} = \widehat{\omega}_{k-1 | k-1}  \label{eq:kalman_pred_wk} \\
+\widehat{\sigma}_{k | k-1} = \widehat{\sigma}_{k-1 | k-1} + \sigma_f \label{eq:kalman_pred_sigmak} 
+\end{gather} 
 
+In the update stage, the \textit{a posteriori} estimates $\widehat{\omega}_{k | k}$ and $\widehat{\sigma}_{k | k}$ is obtained by equations \ref{eq:kalman_up_wk} and \ref{eq:kalman_up_sigmak}. $\widetilde{\omega}_k$ and $\widetilde{\sigma}_{k}$ is the observed frequency offset and estimated observation noise at time $k$ respectively.
 
+\begin{gather}
+\widehat{\omega}_{k | k} = \widehat{\omega}_{k | k-1} + \frac{\widehat{\sigma}_{k | k-1}}{\widehat{\sigma}_{k | k-1} + \widetilde{\sigma}_{k}} ( \widetilde{\omega}_{k} - \widehat{\omega}_{k | k-1} )  \label{eq:kalman_up_wk} \\
+\widehat{\sigma}_{k | k} = \widehat{\sigma}_{k | k-1} \frac{\widetilde{\sigma}_{k}}{\widetilde{\sigma}_{k} + \widehat{\sigma}_{k | k-1}  } \label{eq:kalman_up_sigmak} 
+\end{gather} 
 
+After the estimates $\widehat{\omega}_{k | k}$ and $\widehat{\sigma}_{k | k}$ is obtained, $\widehat{\omega}_{k | k}$ is applied to each symbol in frame $k$. The phase offset is then estimated as the mean of the angular deviation between the training sequence of the received symbols, and the ideal barker sequence.
 
 

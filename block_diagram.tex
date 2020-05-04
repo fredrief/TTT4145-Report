@@ -27,51 +27,66 @@
 \draw (14, 2.5) node[anchor=north, align=center]{RF \\ Hardware};
 
 % -------- TX --------- %
-\filldraw[fill=black!10!white, draw=black!10!white, opacity=0.5] (-2.5,2.5) rectangle (13,-1);
+\filldraw[fill=black!10!white, draw=black!10!white, opacity=0.5] (-2.5,2.5) rectangle (13,-6.5);
+
 \draw (-2.5,2.5) node[anchor=north west]{TX - Software};
 % Draw boxes
 \draw 
-(6, 1.5) node[box, minimum width=7cm, font=\footnotesize](state){Session State}
+(1.25, 1.5) node[box, anchor=west, minimum width=9.75cm, font=\footnotesize](state){Session State}
 
 (0,0) node[box](sound_prod){Sound \\ producer} 
-(2,0) node[box](source_enc){Source \\ encoder} 
-(4,0) node[box](packing_tx){Packing} 
-(6,0) node[box](fec_tx){FEC} 
-(8,0) node[box](symbol_mapping_tx){Symbol \\ mapping} 
-(10,0) node[box](barker_tx){Add \\ Barker} 
-(12,0) node[box](pulse_shape_tx){Pulse \\ shaping} 
+(1.75,0) node[box](source_enc){Source \\ encoder} 
+(3.5,0) node[box](packing_tx){Packing} 
+(5.25,0) node[box](scramble_tx){Scrambler} 
+(7,0) node[box](fec_tx){FEC} 
+(8.75,0) node[box](symbol_mapping_tx){Symbol \\ mapping} 
+(10.5,0) node[box](barker_tx){Add \\ Barker} 
+(12.25,0) node[box](pulse_shape_tx){Pulse \\ shaping} 
 (14,0) node[box](usrp_tx){USRP \\ TX} 
 ;
 
 
-\draw [->, thick] (sound_prod.east) -- node[above, font=\tiny, align=center]{\rawDataRate} node[below, font=\tiny, align=center]{Mb/s} (source_enc.west);
-\draw [->, thick] (source_enc.east) -- node[above, font=\tiny, align=center]{\sourceDataRateQPSK /  \\ \sourceDataRateQAM} node[below, font=\tiny, align=center]{kb/s} (packing_tx.west);
-\draw [->, thick] (packing_tx.east) -- node[above, font=\tiny, align=center]{\packetDataRateQPSK /  \\ \packetDataRateQAM} node[below, font=\tiny, align=center]{kb/s} (fec_tx.west);
-\draw [->, thick] (fec_tx.east) -- node[above, font=\tiny, align=center]{\fecDataRateQPSK /  \\ \fecDataRateQAM} node[below, font=\tiny, align=center]{kb/s}  (symbol_mapping_tx.west);
-\draw [->, thick] (symbol_mapping_tx.east) -- node[above, font=\tiny, align=center]{\symbolMapRateQPSK /  \\ \symbolMapRateQAM} node[below, font=\tiny, align=center]{ksymb/s}  (barker_tx.west);
-\draw [->, thick] (barker_tx.east) -- node[above, font=\tiny, align=center]{\barkerRateQPSK /  \\ \barkerRateQAM} node[below, font=\tiny, align=center]{ksymb/s} (pulse_shape_tx.west);
-\draw [->, thick] (pulse_shape_tx.east) -- (usrp_tx.west);
+\draw [->, thick] (sound_prod.east) -- node[below, yshift=-1.6cm](r0){} node[](r00t){} (source_enc.west);
+\draw [->, thick] (source_enc.east) -- node[](r01t){} (packing_tx.west);
+\draw [->, thick] (packing_tx.east) --  node[](r02t){}(scramble_tx.west);
+\draw [->, thick] (scramble_tx.east) -- node[](r03t){} (fec_tx.west);
+\draw [->, thick] (fec_tx.east) --  node[](r04t){}(symbol_mapping_tx.west);
+\draw [->, thick] (symbol_mapping_tx.east) -- node[](r05t){} (barker_tx.west);
+\draw [->, thick] (barker_tx.east) -- node[](r06t){} (pulse_shape_tx.west);
+\draw [->, thick] (pulse_shape_tx.east) -- node[](r07t){} (usrp_tx.west);
 
 % State lines
-\draw [->, thick] (state.south) ++(-3, 0) -- ++(0, -0.2) -| (source_enc.north);
+\draw [<-, thick] (source_enc.north) -- ++(0, 0.5);
 \draw [<-, thick] (packing_tx.north) -- ++(0, 0.5); 
 \draw [<-, thick] (symbol_mapping_tx.north) -- ++(0, 0.5); 
-\draw [->, thick] (state.south) ++(3, 0) -- ++(0, -0.2) -| (barker_tx.north);
+\draw [<-, thick] (barker_tx.north) -- ++(0, 0.5);
+
+% DATA RATES
+\draw
+(r0) node[above, font=\tiny, align=center](r1){$\rawDataRate$ \\ Mb/s}
+++(1.75, 0) node[above, font=\tiny, align=center](r2){$\sourceDataRateQPSK  /  \sourceDataRateQAM$\\ kb/s}
+++(1.75, 0) node[above, font=\tiny, align=center](r3){$\packetDataRateQPSK  /  \packetDataRateQAM$\\ kb/s}
+++(1.75, 0) node[above, font=\tiny, align=center](r4){$\fecDataRateQPSK  /  \fecDataRateQAM$\\ kb/s}
+++(1.7, 0) node[above, font=\tiny, align=center](r5){$\symbolMapRateQPSK  /  \symbolMapRateQAM$\\ ksymb/s}
+++(1.5, 0) node[above, font=\tiny, align=center](r6){$\barkerRateQPSK  /  \barkerRateQAM$\\ ksymb/s}
+++(1.3, 0) node[above, font=\tiny, align=center](r7b){$137.5$\\ ksymb/s}
+++(1.3, 0) node[above, font=\tiny, align=center](r7){$\sampleRateQPSK / \sampleRateQAM$\\ Msamp/s}
+++(1.1, 0) node[above, font=\tiny, align=center](r8){$\USRPSampleRate$\\ Msamp/s}
+;
 
 
 % -------- RX --------- %
-\filldraw[fill=black!10!white, draw=black!10!white, opacity=0.5] (-2.5,-1.5) rectangle (13,-6.5);
 \draw (-2.5,-1.5) node[anchor=north west]{RX - Software};
 % Draw boxes
 \draw 
 (-1.5,-3) node[box](sound_cons){Sound \\ consumer} 
 (0,-3) node[box](source_decode){Source \\ decoder} 
 (1.5,-3) node[box](unpack_rx){Unpacking} 
-(3,-3) node[box](fec_rx){FEC \\ decoding} 
-(4.5,-3) node[box](demap_rx){De- \\ mapping} 
-(6,-3) node[box](freq_sync_rx){Frequency \\ and \\ phase \\ sync} 
-(7.5,-3) node[box](frame_sync_rx){Frame \\ sync} 
-(9,-3) node[box](bfs_rx){Blind \\ frequency \\ search} 
+(3,-3) node[box](scramble_rx){Scrambler} 
+(4.5,-3) node[box](fec_rx){FEC \\ decoding} 
+(6,-3) node[box](demap_rx){De- \\ mapping} 
+(7.5,-3) node[box](freq_sync_rx){Frequency \\ and \\ phase \\ sync} 
+(9,-3) node[box](frame_sync_rx){Frame \\ sync} 
 (10.5,-3) node[box](symb_sync_rx){Symbol \\ sync} 
 (12,-3) node[box](filter_rx){Matched \\ filter} 
 (14,-3) node[box](usrp_rx){USRP \\ RX} 
@@ -83,16 +98,17 @@
 \node [box, below of=fec_rx, yshift=-1cm,](send_error){Send BER \\ to \\ transmitter};
 
 \draw [->, thick] (usrp_tx.south) -- ++ (-0.1, -1) -- ++(0.2, 0.2) node[right, align=center, font=\scriptsize, anchor=west, xshift=-0.1cm]{Speech \\ data} -- (usrp_rx.north);
-\draw [->, thick] (usrp_rx.west) -- (filter_rx.east);
-\draw [->, thick] (filter_rx.west) -- (symb_sync_rx.east);
-\draw [->, thick] (symb_sync_rx.west) -- (bfs_rx.east);
-\draw [->, thick] (bfs_rx.west) -- (frame_sync_rx.east);
-\draw [->, thick] (frame_sync_rx.west) -- (freq_sync_rx.east);
-\draw [->, thick] (freq_sync_rx.west) -- (demap_rx.east);
-\draw [->, thick] (demap_rx.west) -- (fec_rx.east);
-\draw [->, thick] (fec_rx.west) -- (unpack_rx.east);
-\draw [->, thick] (unpack_rx.west) -- (source_decode.east);
-\draw [->, thick] (source_decode.west) -- (sound_cons.east);
+
+\draw [->, thick] (usrp_rx.west) -- node[](r09r){} (filter_rx.east);
+\draw [->, thick] (filter_rx.west) -- node[](r08r){} (symb_sync_rx.east);
+\draw [->, thick] (symb_sync_rx.west) -- node[](r07r){} (frame_sync_rx.east);
+\draw [->, thick] (frame_sync_rx.west) -- node[](r06r){} (freq_sync_rx.east);
+\draw [->, thick] (freq_sync_rx.west) -- node[](r05r){} (demap_rx.east);
+\draw [->, thick] (demap_rx.west) -- node[](r04r){} (fec_rx.east);
+\draw [->, thick] (fec_rx.west) -- node[](r03r){} (scramble_rx.east);
+\draw [->, thick] (scramble_rx.west) -- node[](r02r){} (unpack_rx.east);
+\draw [->, thick] (unpack_rx.west) -- node[](r01r){} (source_decode.east);
+\draw [->, thick] (source_decode.west) -- node[](r00r){} (sound_cons.east);
 
 \coordinate [below of=demap_rx, xshift=0.2cm, yshift=0.5cm](qpsk_in) {};
 \coordinate [below of=demap_rx, xshift=-0.2cm, yshift=0.5cm](qam_in) {};
@@ -104,9 +120,31 @@
 \draw [->, thick] (qam_out.west)  -| (qam_in);
 \draw [->, thick] (fec_rx.south)  -- node[left, font=\scriptsize, align=center]{Number of \\ detected \\ errors} (send_error.north);
 
+% Data rate arrows
+\draw[->, thin] (r1.north) to[out=90,in=270] (r00t);
+\draw[->, thin] (r2.north) to[out=90,in=270] (r01t);
+\draw[->, thin] (r3.north) to[out=90,in=270] (r02t);
+\draw[->, thin] (r3.north)++(0.3, 0) to[out=45,in=270] (r03t);
+\draw[->, thin] (r4.north)++(0.3, 0) to[out=45,in=270] (r04t);
+\draw[->, thin] (r5.north)++(0.3, 0) to[out=45,in=270] (r05t);
+\draw[->, thin] (r6.north)++(0.3, 0) to[out=45,in=270] (r06t);
+\draw[->, thin] (r7.north)++(0.5, 0) to[out=35,in=270] (r07t);
+\draw[->, thin] (r8.east) -- ++(0.3, 0);
+
+\draw[->, thin] (r8.south)++(0.1,0) to[out=-70,in=90] (r09r);
+\draw[->, thin] (r8.south)++(-0.3,0) to[out=210,in=90] (r08r);
+\draw[->, thin] (r7b.south)++(-0.2,0.05) to[out=250,in=90] (r07r);
+\draw[->, thin] (r6.south)++(-0.4, 0.2) to[out=210,in=90] (r06r);
+\draw[->, thin] (r5.west)++(0.2, -0.1) to[bend right] (r05r);
+\draw[->, thin] (r4.west)++(0.4, -0.1) to[bend right] (r04r);
+\draw[->, thin] (r3.south)++(-0.2, 0) to[out=230,in=90] (r03r);
+\draw[->, thin] (r3.west)++(0.2, -0.1) to[out=200,in=90] (r02r);
+\draw[->, thin] (r2.west)++(0.2, -0.1) to[out=200,in=90] (r01r);
+\draw[->, thin] (r1.south)++(-0.2,0) to[out=210,in=90] (r00r);
+
 
 \end{tikzpicture}
 
-\caption{Block diagram of data packet system. This block diagram shows the forward path of the system, where speech data is being transmitted.}
+\caption{Block diagram of data packet system. This block diagram shows the forward path of the system, where speech data is being transmitted. Data rates for Low/High data quality is indicated on each arrow.}
 \label{fig:block_diagram}
 \end{figure*}

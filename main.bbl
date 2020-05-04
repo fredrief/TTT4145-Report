@@ -25,10 +25,6 @@
 {National Instruments}, ``Usrp-2901 specifications - national instruments,''
   \url{https://www.ni.com/pdf/manuals/374925c.pdf}, (Accessed on 04/16/2020).
 
-\bibitem{hamming}
-M.~Dipperstein, ``Hamming (7,4) code discussion and implementation,''
-  \url{http://michael.dipperstein.com/hamming/}, (Accessed on 04/20/2020).
-
 \bibitem{rfconnector}
 {TE Connectivity}, ``Rf coaxial connectors,''
   \url{https://www.mouser.com/datasheet/2/418/NG_DS_1-1773725-8_RF_COAX_QRG_0114_TE-1948_RFcoaxi-1232379.pdf},
@@ -43,5 +39,24 @@ M.~Dipperstein, ``Hamming (7,4) code discussion and implementation,''
 {International Telecommunication Union}, ``Recommendation itu-r p.1238-10,''
   \url{https://www.itu.int/dms_pubrec/itu-r/rec/p/R-REC-P.1238-10-201908-I!!PDF-E.pdf},
   (Accessed on 04/14/2020).
+
+\bibitem{WinAPI}
+{Microsoft Corporation}, ``Windows api index,''
+  \url{https://docs.microsoft.com/en-us/windows/win32/apiindex/api-index-portal},
+  (Accessed on 05/03/2020).
+
+\bibitem{hamming}
+M.~Dipperstein, ``Hamming (7,4) code discussion and implementation,''
+  \url{http://michael.dipperstein.com/hamming/}, (Accessed on 04/20/2020).
+
+\bibitem{labviewDLL}
+{National Instruments Corporation}, ``Labview nxg - national instruments,''
+  \url{https://www.ni.com/en-no/shop/labview/labview-nxg.html}, (Accessed on
+  05/03/2020).
+
+\bibitem{signalAnalyzer}
+{MathWorks}, ``Using signal analyzer app - matlab,''
+  \url{https://se.mathworks.com/help/signal/ug/using-signal-analyzer-app.html},
+  (Accessed on 05/02/2020).
 
 \end{thebibliography}

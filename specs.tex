@@ -6,35 +6,31 @@
     \begin{tabular}{lc}
     \rowcolor[rgb]{ 0,  0,  0} \textcolor[rgb]{ 1,  1,  1}{\textbf{System Variables}}	& \textcolor[rgb]{ 1,  1,  1}{\textbf{Value}} 		\\
     \rowcolor[rgb]{ 0,  0,  0} \textcolor[rgb]{ 1,  1,  1}{} & \textcolor[rgb]{ 1,  1,  1}{\textbf{Low / High Data rate}} 				\\
-    	Frequency $f_0$ 								& $\MainCarrierFreq$ MHz 							\\
-    	Modulation 									& $\text{QPSK} / \text{QAM-64}$						\\
-    	Bit per symbol $m$ 								& $2 /6$ 											\\
-    	Sound sampling rate $f_s$  						& $11025 / 22050$ Hz 								\\
-    	Bits per sound sample $b_s$ 						& $8 / 12$ bits 										\\
-    	Sound datarate $R_{ss}$ 							& $\sourceDataRateQPSK / \sourceDataRateQAM$ kbits/s	\\
-    	Channel coding 								& Hamming (4,7) 									\\
+    	Frequency $f_0$ 						& $\MainCarrierFreq$ MHz 									\\
+    	Modulation 							& $\text{QPSK} / \text{QAM-16}$								\\
+    	Sound sampling rate $f_s$  				& $\soundSampleRateQPSK / \soundSampleRateQAM$ Hz			\\
+    	Bits per sound sample $b_s$ 				& $\bitPerSoundSample$ bits									\\
+    	Sound datarate $R_{ss}$ 					& $\sourceDataRateQPSK / \sourceDataRateQAM$ kbits/s			\\
+    	Channel coding 						& Hamming (4,7) 											\\
 
     \rowcolor[rgb]{ 0,  0,  0} \textcolor[rgb]{ 1,  1,  1}{\textbf{Packet Parameters}} & \textcolor[rgb]{ 1,  1,  1}{} 				\\
-	Packet header size      							& $\headerBits $  bits								\\
-    	Packet data length     							& $\packetDataSymbols$  symbols					 	\\
-    	Packet size   									& $\packetDataBitsQPSK/ \packetDataBitsQAM$  bits		\\
+	Packet header size      					& $\headerBits $  bits										\\
+    	Packet size   							& $\packetDataBitsQPSK$  bits										\\
     
     \rowcolor[rgb]{ 0,  0,  0} \textcolor[rgb]{ 1,  1,  1}{\textbf{Frame Parameters}} & \textcolor[rgb]{ 1,  1,  1}{} 				\\
-    	Training sequence type 							& Barker										 	\\
-    	Training sequence length							& $\barkerSymbols$ symbols 					 		\\
-   	Training sequence size bits 						& $\barkerBitsQPSK / \barkerBitsQAM$ bits	 			\\
-    	Frame size 									& $\frameSizeBitsQPSK / \frameSizeBitsQAM$ bits			\\
+    	Training sequence type 					& Barker										 			\\
+    	Training sequence length					& $\barkerSymbols$ symbols 					 				\\
         
     \rowcolor[rgb]{ 0,  0,  0} \textcolor[rgb]{ 1,  1,  1}{\textbf{Burst Parameters}} & \textcolor[rgb]{ 1,  1,  1}{} 					\\
-    	Guard period 									& $\guardSymbols$ symbols							\\
-    	Burst size 										& $\burstSizeBitsQPSK / \burstSizeBitsQAM$ bits 			\\
+    	Guard period 							& $\guardSymbols$ symbols									\\
+    	Burst Length							& $\burstLengthSymbolsQPSK / \burstLengthSymbolsQAM$ symbols	\\
     	
     \rowcolor[rgb]{ 0,  0,  0} \textcolor[rgb]{ 1,  1,  1}{\textbf{Transmission Characteristics}} & \textcolor[rgb]{ 1,  1,  1}{} 		\\
-    	System bit rate $R_b$ 							& $191,35 / 577,18$ kbits/s 							\\
-    	Symbol rate $R_s$ 								& $95,67 / 96,20$ ksymbols/s 							\\
-    	Pulse shaping filter 								& root raised cosine 									\\
-    	Pulse shaping filter parameter $\alpha$ 				& $0.3$ 											\\
-    	Minimum signal bandwidth $\Delta f$ 				& $62,2 / 62,5$ kHz 									\\
+    	Symbol rate $R_s$ 						& $\symbolRateQPSK$ ksymbols/s 				\\
+    	Samples per Symbol 					& $\sps$													\\
+	Pulse shaping filter 						& root raised cosine 											\\
+    	Pulse shaping filter parameter $\alpha$ 		& $0.3$ 													\\
+    	Minimum Nyquist bandwidth $\Delta f$ 		& $\minBWQPSK$ kHz 							\\
     \end{tabular}
   \label{tab:specs_data}
 \end{table}
@@ -47,7 +43,8 @@
     \rowcolor[rgb]{ 0,  0,  0} \textcolor[rgb]{ 1,  1,  1}{} & \textcolor[rgb]{ 1,  1,  1}{\textbf{Low / High Data rate}} 				\\
     	Frequency $f_0$ 								& $\BERCarrierFreq$ MHz 							\\
     	Modulation 									& $\text{QPSK}$									\\
-	
+    	Channel coding 								& Hamming (4,7) 									\\
+
     \rowcolor[rgb]{ 0,  0,  0} \textcolor[rgb]{ 1,  1,  1}{\textbf{Packet Parameters}} & \textcolor[rgb]{ 1,  1,  1}{} 				\\
 	Packet header size      							& $\headerBits $  bits								\\
     	Packet size									& $\BERDataBits$  bits					 			\\
@@ -55,15 +52,19 @@
     \rowcolor[rgb]{ 0,  0,  0} \textcolor[rgb]{ 1,  1,  1}{\textbf{Frame Parameters}} & \textcolor[rgb]{ 1,  1,  1}{} 				\\
     	Training sequence type 							& Barker										 	\\
     	Training sequence length							& $\barkerSymbols$ symbols 					 		\\
-   	Training sequence size bits 						& $\barkerBitsQPSK$ bits	 							\\
-    	Frame size 									& $\BERFrameSize$ bits								\\
-    	
+	
+    \rowcolor[rgb]{ 0,  0,  0} \textcolor[rgb]{ 1,  1,  1}{\textbf{Burst Parameters}} & \textcolor[rgb]{ 1,  1,  1}{} 					\\
+    	Burst Length									& $\BERBurstSize $ symbols							\\
+	
     \rowcolor[rgb]{ 0,  0,  0} \textcolor[rgb]{ 1,  1,  1}{\textbf{Transmission Characteristics}} & \textcolor[rgb]{ 1,  1,  1}{} 		\\
-    	System bit rate $R_b$ 							& $\BERDataRate$ kbits/s 							\\
     	Symbol rate $R_s$ 								& $\BERSymbolRate$ ksymbols/s 						\\
+    	Samples per Symbol 					& $\sps$													\\
+
     	Pulse shaping filter 								& root raised cosine 									\\
-    	Pulse shaping filter parameter $\alpha$ 				& 0.3 											\\
-    	Minimum signal bandwidth $\Delta f$ 				& $62,2 / 62,5$ kHz 									\\
+    	Pulse shaping filter parameter $\alpha$ 				& $\filterRollOff$											\\
+    	Minimum signal bandwidth $\Delta f$ 				& $\BERminBW$ kHz 					\\
     \end{tabular}
   \label{tab:specs_ber}
 \end{table}
+
+

@@ -17,6 +17,7 @@
 \usepackage[europeanresistors,americaninductors, americancurrents, american voltages, siunitx]{circuitikz}
 \usepackage{tikz}
 \usetikzlibrary{shapes,arrows, calc, automata, positioning, chains, decorations.markings, calc, patterns, angles, quotes}
+\usepackage{pgfplots}
 
 \usepackage{graphicx} % Figures/graphics
 \usepackage{float} % Floats, H
@@ -32,59 +33,102 @@
 \renewcommand{\Re}{\text{Re}}
 \renewcommand{\Im}{\text{Im}}
 
-% -------------------------------- System variables ----------------------------- %
-\newcommand{\bw}{65}
-\newcommand{\MainCarrierFreq}{2415} %MHz
+% TODOs
+\newcommand\todo[1]{\textcolor{red}{#1}}
 
-\newcommand{\headerBits}{11}
-\newcommand{\packetDataSymbols}{128}
-\newcommand{\packetDataBitsQPSK}{256}
-\newcommand{\packetDataBitsQAM}{768}
+
+% -------------------------------- System variables ----------------------------- %
+% Specs
+
+\newcommand{\MainCarrierFreq}{2415} %MHz
+\newcommand{\paPower}{10}
+\newcommand{\BERThreshold}{$1\cdot10^{-3}$} % For changing quality
+
+\newcommand{\bitPerSymbQPSK}{2}
+\newcommand{\bitPerSymbQAM}{4}
+\newcommand{\soundSampleRateQPSK}{11025}
+\newcommand{\soundSampleRateQAM}{22050}
+\newcommand{\bitPerSoundSample}{12}
+
+
+\newcommand{\headerBits}{8}
+\newcommand{\packetDataSymbolsQPSK}{456}
+\newcommand{\packetDataSymbolsQAM}{228}
+\newcommand{\packetDataBitsQPSK}{512}
+\newcommand{\packetDataBitsQAM}{512}
 
 \newcommand{\barkerSymbols}{26}
-\newcommand{\barkerBitsQPSK}{52}
-\newcommand{\barkerBitsQAM}{156}
-\newcommand{\frameSizeBitsQPSK}{319}
-\newcommand{\frameSizeBitsQAM}{935}
+\newcommand{\barkerBitsQPSK}{\the\numexpr2*\barkerSymbols\relax}
+\newcommand{\barkerBitsQAM}{\the\numexpr4*\barkerSymbols\relax}
 
-\newcommand{\guardSymbols}{6}
-\newcommand{\guardBitsQPSK}{12}
-\newcommand{\guardBitsQAM}{36}
+\newcommand{\guardSymbols}{2}
+\newcommand{\guardBitsQPSK}{\the\numexpr\bitPerSymbQPSK*\guardSymbols\relax}
+\newcommand{\guardBitsQAM}{\the\numexpr\bitPerSymbQAM*\guardSymbols\relax}
+\newcommand{\burstLengthSymbolsQPSK}{484}
+\newcommand{\burstLengthSymbolsQAM}{256}
 \newcommand{\burstSizeBitsQPSK}{331}
 \newcommand{\burstSizeBitsQAM}{935}
 
-\newcommand{\systemBitRateQPSK}{187.39}
-\newcommand{\systemBitRateQAM}{572.67}
-\newcommand{\symbolRateQPSK}{93.69}
-\newcommand{\symbolRateQAM}{95.45}
-\newcommand{\minBWQPSK}{60.9}
-\newcommand{\minBWQAM}{62.0}
+\newcommand{\systemBitRateQPSK}{187.39} % kbits/s
+\newcommand{\systemBitRateQAM}{572.67} % kbits/s
+\newcommand{\symbolRateQPSK}{137.5} % ksymb/s
+\newcommand{\symbolRateQAM}{\symbolRateQPSK} % ksymb/s
+\newcommand{\filterRollOff}{0.3}
+\newcommand{\sps}{8}
+
+
+\newcommand{\minBWQPSK}{89,37}% kHz
+\newcommand{\minBWQAM}{\minBWQPSK}% kHz
+\newcommand{\maxSystemBW}{100} % kHz
 
 % Data rates
 \newcommand{\rawDataRate}{1.4} %Mb/s
-\newcommand{\sourceDataRateQPSK}{88.2} % kb/s
-\newcommand{\sourceDataRateQAM}{246.6} % kb/s
-\newcommand{\packetDataRateQPSK}{95.8} % kb/s
-\newcommand{\packetDataRateQAM}{287.3} % kb/s
-\newcommand{\fecDataRateQPSK}{167.6} % kb/s
-\newcommand{\fecDataRateQAM}{502.8} % kb/s
-\newcommand{\symbolMapRateQPSK}{83.8} % ksymb/s
-\newcommand{\symbolMapRateQAM}{83.8} % ksymb/s
-\newcommand{\barkerRateQPSK}{100.1} % ksymb/s
-\newcommand{\barkerRateQAM}{100.6} % ksymb/s
+\newcommand{\sourceDataRateQPSK}{\the\numexpr\bitPerSoundSample*\soundSampleRateQPSK/1000\relax} % kb/s
+\newcommand{\sourceDataRateQAM}{\the\numexpr\bitPerSoundSample*\soundSampleRateQAM/1000\relax} % kb/s
+\newcommand{\packetDataRateQPSK}{134.4} % kb/s
+\newcommand{\packetDataRateQAM}{268.7} % kb/s
+\newcommand{\fecDataRateQPSK}{235.1} % kb/s
+\newcommand{\fecDataRateQAM}{470.3} % kb/s
+\newcommand{\symbolMapRateQPSK}{117.6} % ksymb/s
+\newcommand{\symbolMapRateQAM}{117.6} % ksymb/s
+\newcommand{\barkerRateQPSK}{124.5} % ksymb/s
+\newcommand{\barkerRateQAM}{130.2} % ksymb/s
+\newcommand{\sampleRateQPSK}{1.00} % M sample/s
+\newcommand{\sampleRateQAM}{1.06} % M sample/s
 
-\newcommand{\packetRate}{566,1} % Packet/sec
+\newcommand{\USRPSampleRate}{1.1} %Msamp/s
+
 
 % BER Feedback path
 \newcommand{\BERDataBits}{8}
-\newcommand{\BERFrameSize}{71}
+\newcommand{\BERBurstSize}{40} % Symbols
 
-\newcommand{\BERCarrierFreq}{2420} %MHz
-\newcommand{\BERDataRate}{42.5} % kb/s
-\newcommand{\BERSymbolRate}{100} %ksymb/s
+\newcommand{\BERCarrierFreq}{2455} %MHz
+\newcommand{\BERSymbolRate}{\symbolRateQPSK} %ksymb/s
+\newcommand{\BERminBW}{89,37}
 
-% Frequency sync
-\newcommand{\bfsInterval}{0.0037}
+
+% ------------------------ MEASUREMENTS -----------------------------%
+\newcommand{\measBW}{60} %kHz
+\newcommand{\measPWR}{11.5} %dBm
+\newcommand{\measPWRbad}{0.5} %dBm
+\newcommand{\measDelay}{5} %ms
+\newcommand{\measDelayStd}{2} %ms
+\newcommand{\measDelaySwitch}{40} %ms
+
+\newcommand{\measSNRGood}{15} %dB
+\newcommand{\measSNRBad}{8} %dB
+\newcommand{\measEVMGood}{-9} %dB
+\newcommand{\measEVMBad}{-4} %dB
+\newcommand{\measBERQPSKGood}{$4.3\cdot10^{-6}$} 
+\newcommand{\measBERQAMGood}{$3\cdot10^{-4}$} 
+\newcommand{\measBERQPSKBad}{$2.1\cdot10^{-4}$} 
+\newcommand{\measBERQAMBad}{$7\cdot10^{-2}$} 
+
+
+% ------------------------ Document Variables ---------------------------- %
+\newcommand{\figW}{0.7}
+
 
 
 % ---------------------------------- DOCUMENT ------------------------------------------------- %
@@ -97,7 +141,9 @@
 
 \maketitle
 \begin{abstract} 
-This paper is presenting the design and implementation of a radio communication system for broadcasting of speech, with adaptable data rate. This system is to be seen as a "proof of concept", where the main goal is to demonstrate a radio system with feedback from receiver (RX) to transmitter (TX) such that the transmitted data rate adapts to the state of the radio channel, by evaluating the received bit error rate (BER). The data rate is varied by a factor 3 by switching between QPSK and QAM-64 modulation, while the bandwidth is fixed. 
+This paper is presenting the design and implementation of a radio communication system for broadcasting of speech, with adaptable data rate. This system is to be seen as a "proof of concept", where the main goal is to demonstrate a radio system with feedback from receiver (RX) to transmitter (TX) such that the transmitted data rate adapts to the state of the radio channel. The data rate is varied by a factor 2 by switching between QPSK and QAM-16 modulation, while bandwidth and transmit power is fixed. The proposed system is implemented with a bandwidth of \measBW kHz and a transmit power of \measPWR dBm.
+
+The system is verified in an indoor environment and the varying state of the radio channel is simulated by adjusting the transmit power. The system is broadcasting clear speech and the quality state changes with a delay of \measDelaySwitch ms when the detected BER drops below a predefined threshold. Our measurements shows a BER of \measBERQPSKGood and \measBERQAMGood for transmission with high and low data rate respectively. The total delay from transmitter to receiver is measured to \measDelay ms, making the system well suited the for two-way communication as well as broadcasting.
 \end{abstract}
 
 % INTRODUCTION
@@ -106,17 +152,20 @@ This paper is presenting the design and implementation of a radio communication 
 % SPECIFICATIONS
 \input{specification.tex}
 
-% DESIGN DESCRIPTION
-\input{design_description.tex}
-
 % LINK BUDGET 
 \input{link_budget_sec.tex}
+
+% DESIGN DESCRIPTION
+\input{design_description.tex}
 
 % DESIGN MOTIVATION
 \input{design_motivation.tex}
 
 % VERIFICATION
 \input{meas_and_verification.tex}
+
+% CONCLUSION
+\input{conclusion.tex}
 
 % BIBLIOGRAPHY
 \bibliographystyle{IEEEtran}
@@ -129,11 +178,5 @@ This paper is presenting the design and implementation of a radio communication 
 \label{a:block_diagram}
 \input{block_diagram.tex}
 \input{block_diagram_feedback.tex}
-
-\section{Symbol Mapping Scheme}
-\label{a:symbol_mapping}
-\input{symbol_mapping.tex}
-
-
 
 \end{document}
