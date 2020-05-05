@@ -1,3 +1,8 @@
 % !TEX root = main.tex
 \section{Conclusion}
 \label{sec:conclusion}
+The design and implementation of a radio communication system for broadcasting of speech with adaptable data rate is presented. The system adapts the transmitted data rate to the state of the radio channel by evaluating detected bit error at the receiver. The transmitted data rate is varied by a factor 2 by switching modulation format between QPSK and QAM-16. 
+
+The system was verified in an indoor environment with a transmission distance of 1 meter and variations in the radio channel is simulated by adjusting the transmit power. The system transmit at high data rate ($520,8$ kb/s) when using QAM-16 modulated symbols at $\measPWR$ dBm and low data rate ($249$ kb/s) for QPSK at $\measPWRbad$ dBm. Bit error rates of \measBERQAMGood and \measBERQPSKBad was measured at high and low data rate respectively.
+
+The high BER for QAM-16 modulation makes the effect of adaptable quality hardly audible, because of the high noise level when transmitting at high data rate. The adaptable quality feature is however interesting in itself and this demonstration shows a working ``proof of concept''. By adapting the transmitted data rate to the state of the radio channel, the system yields a better utilization of available resources. This two-level adaption could be extended to several levels for higher performance in future improvements.

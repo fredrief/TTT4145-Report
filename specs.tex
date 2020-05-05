@@ -29,7 +29,7 @@
     	Symbol rate $R_s$ 						& $\symbolRateQPSK$ ksymbols/s 				\\
     	Samples per Symbol 					& $\sps$													\\
 	Pulse shaping filter 						& root raised cosine 											\\
-    	Pulse shaping filter parameter $\alpha$ 		& $0.3$ 													\\
+    	Pulse shaping filter parameter $\alpha$ 		& $\filterRollOff$											\\
     	Minimum Nyquist bandwidth $\Delta f$ 		& $\minBWQPSK$ kHz 							\\
     \end{tabular}
   \label{tab:specs_data}
@@ -62,7 +62,7 @@
 
     	Pulse shaping filter 								& root raised cosine 									\\
     	Pulse shaping filter parameter $\alpha$ 				& $\filterRollOff$											\\
-    	Minimum signal bandwidth $\Delta f$ 				& $\BERminBW$ kHz 					\\
+    	Minimum Nyquist bandwidth $\Delta f$ 				& $\BERminBW$ kHz 					\\
     \end{tabular}
   \label{tab:specs_ber}
 \end{table}

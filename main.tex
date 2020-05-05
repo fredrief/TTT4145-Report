@@ -41,8 +41,9 @@
 % Specs
 
 \newcommand{\MainCarrierFreq}{2415} %MHz
-\newcommand{\paPower}{10}
-\newcommand{\BERThreshold}{$1\cdot10^{-3}$} % For changing quality
+\newcommand{\paPower}{-10} % dBm
+\newcommand{\BERThreshold}{$1\cdot10^{-2}$} % For changing quality
+\newcommand{\BERPowerLimit}{-17} % dBm
 
 \newcommand{\bitPerSymbQPSK}{2}
 \newcommand{\bitPerSymbQAM}{4}
@@ -71,13 +72,13 @@
 
 \newcommand{\systemBitRateQPSK}{187.39} % kbits/s
 \newcommand{\systemBitRateQAM}{572.67} % kbits/s
-\newcommand{\symbolRateQPSK}{137.5} % ksymb/s
+\newcommand{\symbolRateQPSK}{150 } % ksymb/s
 \newcommand{\symbolRateQAM}{\symbolRateQPSK} % ksymb/s
-\newcommand{\filterRollOff}{0.3}
+\newcommand{\filterRollOff}{0.5}
 \newcommand{\sps}{8}
 
 
-\newcommand{\minBWQPSK}{89,37}% kHz
+\newcommand{\minBWQPSK}{112,5}% kHz
 \newcommand{\minBWQAM}{\minBWQPSK}% kHz
 \newcommand{\maxSystemBW}{100} % kHz
 
@@ -96,22 +97,22 @@
 \newcommand{\sampleRateQPSK}{1.00} % M sample/s
 \newcommand{\sampleRateQAM}{1.06} % M sample/s
 
-\newcommand{\USRPSampleRate}{1.1} %Msamp/s
+\newcommand{\USRPSampleRate}{1.2} %Msamp/s
 
 
 % BER Feedback path
-\newcommand{\BERDataBits}{8}
-\newcommand{\BERBurstSize}{40} % Symbols
+\newcommand{\BERDataBits}{26}
+\newcommand{\BERBurstSize}{43} % Symbols
 
 \newcommand{\BERCarrierFreq}{2455} %MHz
 \newcommand{\BERSymbolRate}{\symbolRateQPSK} %ksymb/s
-\newcommand{\BERminBW}{89,37}
+\newcommand{\BERminBW}{\minBWQPSK}
 
 
 % ------------------------ MEASUREMENTS -----------------------------%
-\newcommand{\measBW}{60} %kHz
-\newcommand{\measPWR}{11.5} %dBm
-\newcommand{\measPWRbad}{0.5} %dBm
+\newcommand{\measBW}{232} %kHz, -60dBc
+\newcommand{\measPWR}{-10} %dBm
+\newcommand{\measPWRbad}{-25} %dBm
 \newcommand{\measDelay}{5} %ms
 \newcommand{\measDelayStd}{2} %ms
 \newcommand{\measDelaySwitch}{40} %ms
@@ -120,13 +121,13 @@
 \newcommand{\measSNRBad}{8} %dB
 \newcommand{\measEVMGood}{-9} %dB
 \newcommand{\measEVMBad}{-4} %dB
-\newcommand{\measBERQPSKGood}{$4.3\cdot10^{-6}$} 
-\newcommand{\measBERQAMGood}{$3\cdot10^{-4}$} 
-\newcommand{\measBERQPSKBad}{$2.1\cdot10^{-4}$} 
-\newcommand{\measBERQAMBad}{$7\cdot10^{-2}$} 
+\newcommand{\measBERQPSKGood}{$1.35\cdot10^{-5}$} 
+\newcommand{\measBERQAMGood}{$6.0\cdot10^{-2}$} 
+\newcommand{\measBERQPSKBad}{$1.4\cdot10^{-4}$} 
+\newcommand{\measBERQAMBad}{$1.32\cdot10^{-1}$} 
 
 
-% ------------------------ Document Variables ---------------------------- %
+% ------------------------ Document Variables ---------------------------- % 
 \newcommand{\figW}{0.7}
 
 
@@ -141,9 +142,9 @@
 
 \maketitle
 \begin{abstract} 
-This paper is presenting the design and implementation of a radio communication system for broadcasting of speech, with adaptable data rate. This system is to be seen as a "proof of concept", where the main goal is to demonstrate a radio system with feedback from receiver (RX) to transmitter (TX) such that the transmitted data rate adapts to the state of the radio channel. The data rate is varied by a factor 2 by switching between QPSK and QAM-16 modulation, while bandwidth and transmit power is fixed. The proposed system is implemented with a bandwidth of \measBW kHz and a transmit power of \measPWR dBm.
+This paper is presenting the design and implementation of a radio communication system for broadcasting of speech, with adaptable data rate. This system is to be seen as a "proof of concept", where the main goal is to demonstrate a radio system with feedback from receiver (RX) to transmitter (TX) such that the transmitted data rate adapts to the state of the radio channel. The data rate is varied by a factor 2 by switching between QPSK and QAM-16 modulation, while bandwidth and transmit power is fixed. The proposed system is implemented with a -60dBc bandwidth of \measBW kHz and a transmit power of \measPWR dBm.
 
-The system is verified in an indoor environment and the varying state of the radio channel is simulated by adjusting the transmit power. The system is broadcasting clear speech and the quality state changes with a delay of \measDelaySwitch ms when the detected BER drops below a predefined threshold. Our measurements shows a BER of \measBERQPSKGood and \measBERQAMGood for transmission with high and low data rate respectively. The total delay from transmitter to receiver is measured to \measDelay ms, making the system well suited the for two-way communication as well as broadcasting.
+The adaptive quality feature is verified and the system changes quality immediately when the detected error rate drops below a predefined threshold. The measured bit error rates are \measBERQAMGood  and \measBERQPSKBad for high and low data rates respectively. The total delay from transmitter to receiver is measured to \measDelay ms, making the system well suited the for two-way communication as well as broadcasting. 
 \end{abstract}
 
 % INTRODUCTION

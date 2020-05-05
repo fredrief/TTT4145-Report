@@ -76,7 +76,7 @@
 \draw[->, thick] (demap_rx.south) ++(1, -0.7) -- node[above, font=\scriptsize]{QPSK} ++(-1, 0) -- (demap_rx.south);
 
 
-\node [decision, below of=unpack_rx, yshift=-0.5cm] (change_state) {Change \\ state?};
+\node [decision, below of=unpack_rx, yshift=-0.5cm, font=\scriptsize] (change_state) {Change \\ state?};
 \node [box, below of=change_state, yshift=-0.5cm, minimum height=0] (do_nothing) {Do nothing};
 \node [box, left of=change_state, xshift=-0.8cm, minimum height=0] (do_change) {Change \\ state};
 

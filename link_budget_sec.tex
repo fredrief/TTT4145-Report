@@ -1,13 +1,13 @@
 % !TEX root = main.tex
 \section{Link Budget}
 \label{sec:link_budget}
-The link budget for the system is shown in table \ref{tab:link_budget}. As the purpose of the system is to demonstrate the feedback feature, the system is designed for the test environment only, which is reflected in the link budget. The system is designed to operate indoors with a distance of 2 meters between transmitter and receiver. Table \ref{tab:link_budget} shows losses from propagation, loss in TX and RX and some estimated key parameters at the receiver, such as $E_b/N_0$ and BER. 
+The link budget for the system is shown in table \ref{tab:link_budget}. As the purpose of the system is to demonstrate the feedback feature, the system is designed for the test environment only, which is reflected in the link budget. The system is designed to operate indoors with a distance of 2 meters between transmitter and receiver. Table \ref{tab:link_budget} shows losses from propagation, loss in TX and RX and some estimated key parameters at the receiver. 
 
 \input{link_budget.tex}
 
 The value for connector loss is taken from datasheets of standard coaxial RF connectors \cite{rfconnector}. The antenna gain value is taken from the data sheet \cite{antenna} which reports a peak gain of 3.4 dBi. We used the value 3 dBi in the link budget to account for suboptimal conditions. The launch power, $P_{PA}$, was adjusted after measurements to obtain appropriate $E_b/N_0$ at the receiver.
 
-The estimated path loss constitutes solely of the propagation loss obtained from the ITU Indoor Propagations Loss Model \cite{itu_model}. The loss model consists of two adjustable factors, the distance power loss coefficient, $N$, and the floor loss penetration factor, $P_f(n)$. The latter is set to 0, and the former was set to 38 after calibrating the test environment. 
+The estimated path loss constitutes solely of the propagation loss obtained from the ITU Indoor Propagations Loss Model \cite{itu_model}. The loss model consists of two adjustable factors, the distance power loss coefficient, $N$, and the floor loss penetration factor, $P_f(n)$. The latter is set to 0, and the former was set to 38 after calibrating the test environment. Figure \ref{fig:path_loss} shows the measured path loss and the prediction from the ITU model before and after adjusting the power loss coefficient.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -18,7 +18,7 @@ The estimated path loss constitutes solely of the propagation loss obtained from
 \end{figure}
 
 
- Other loss factors such as pointing loss and polarisation loss was considered but measurements showed that the amount of reflections in the room made pointing and polarisation irrelevant to the received power. 
+ Other loss factors such as pointing loss and polarisation loss was considered, but measurements showed that the amount of reflections in the room made pointing and polarisation irrelevant to the received power. 
  
 The antenna noise density was measured with a spectrum analyser and the estimated value was taken as an average of several single runs. The noise figure of the receiver is included to account for noise added by the radio hardware, with value taken from the data sheet. 
 

@@ -12,13 +12,15 @@
             	}]
 \draw[thick] (0,0) rectangle (\linewidth, -0.7);
 \draw[thick] (0.25\linewidth,0) -- ++(0, -0.7);
-\draw[thick] (0.35\linewidth,0) -- ++(0, -0.7);
+\draw[thick] (0.4\linewidth,0) -- ++(0, -0.7);
+\draw[thick] (0.55\linewidth,0) -- ++(0, -0.7);
 \draw[thick] (0.85\linewidth,0) -- ++(0, -0.7);
 
 \draw
 (0,0) node[slot, minimum width=0.25\linewidth, anchor=north west](barker){Training sequence \\ \barkerBitsQPSK}
-(0.25\linewidth,0)  node[slot, minimum width=0.1\linewidth, anchor=north west](barker){Header \\ \headerBits}
-(0.35\linewidth,0) node[slot, minimum width=0.43\linewidth, anchor=north west](barker){Speech data \\ \packetDataBitsQPSK}
+(0.25\linewidth,0)  node[slot, minimum width=0.15\linewidth, anchor=north west](barker){Session ID \\ 3}
+(0.4\linewidth,0)  node[slot, minimum width=0.15\linewidth, anchor=north west](barker){Packet ID \\ 5}
+(0.55\linewidth,0) node[slot, minimum width=0.30\linewidth, anchor=north west](barker){Payload \\ \packetDataBitsQPSK}
 (0.85\linewidth,0) node[slot, minimum width=0.15\linewidth, anchor=north west](barker){Guard bits \\ \guardBitsQPSK}
 ;	
 
@@ -36,13 +38,15 @@
             	}]
 \draw[thick] (0,0) rectangle (\linewidth, -0.7);
 \draw[thick] (0.25\linewidth,0) -- ++(0, -0.7);
-\draw[thick] (0.35\linewidth,0) -- ++(0, -0.7);
+\draw[thick] (0.4\linewidth,0) -- ++(0, -0.7);
+\draw[thick] (0.55\linewidth,0) -- ++(0, -0.7);
 \draw[thick] (0.85\linewidth,0) -- ++(0, -0.7);
 
 \draw
 (0,0) node[slot, minimum width=0.25\linewidth, anchor=north west](barker){Training sequence \\ \barkerBitsQAM}
-(0.25\linewidth,0)  node[slot, minimum width=0.1\linewidth, anchor=north west](barker){Header \\ \headerBits}
-(0.35\linewidth,0) node[slot, minimum width=0.43\linewidth, anchor=north west](barker){Speech data \\ \packetDataBitsQAM}
+(0.25\linewidth,0)  node[slot, minimum width=0.15\linewidth, anchor=north west](barker){Session ID \\ 3}
+(0.4\linewidth,0)  node[slot, minimum width=0.15\linewidth, anchor=north west](barker){Packet ID \\ 5}
+(0.55\linewidth,0) node[slot, minimum width=0.30\linewidth, anchor=north west](barker){Payload \\ \packetDataBitsQAM}
 (0.85\linewidth,0) node[slot, minimum width=0.15\linewidth, anchor=north west](barker){Guard bits \\ \guardBitsQAM}
 ;	
 
@@ -58,13 +62,15 @@
 			minimum height=0.7cm
             	}]
 \draw[thick] (0,0) rectangle (\linewidth, -0.7);
+\draw[thick] (0.40\linewidth,0) -- ++(0, -0.7);
+\draw[thick] (0.55\linewidth,0) -- ++(0, -0.7);
 \draw[thick] (0.70\linewidth,0) -- ++(0, -0.7);
-\draw[thick] (0.82\linewidth,0) -- ++(0, -0.7);
 
 \draw
-(0,0) node[slot, minimum width=0.7\linewidth, anchor=north west](barker){Training sequence \\ \barkerBitsQPSK}
-(0.70\linewidth,0)  node[slot, minimum width=0.12\linewidth, anchor=north west](barker){Header \\ \headerBits}
-(0.82\linewidth,0) node[slot, minimum width=0.18\linewidth, anchor=north west](barker){BER data \\ \BERDataBits}
+(0,0) node[slot, minimum width=0.4\linewidth, anchor=north west](barker){Training sequence \\ \barkerBitsQPSK}
+(0.40\linewidth,0)  node[slot, minimum width=0.15\linewidth, anchor=north west](barker){Session ID \\ 3}
+(0.55\linewidth,0)  node[slot, minimum width=0.15\linewidth, anchor=north west](barker){Packet ID \\ 5}
+(0.7\linewidth,0) node[slot, minimum width=0.3\linewidth, anchor=north west](barker){Payload \\ 26}
 ;	
 
 \end{tikzpicture}}
