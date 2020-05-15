@@ -32,8 +32,8 @@
 
 \bibitem{antenna}
 {Siretta}, ``Delta-7a datasheet,''
-  \url{https://www.siretta.com/wp-content/uploads/2020/01/Delta-7A-Rev-1.7.pdf},
-  (Accessed on 04/14/2020).
+  \url{https://docs.rs-online.com/a8a8/0900766b81540fe9.pdf}, (Accessed on
+  04/14/2020).
 
 \bibitem{itu_model}
 {International Telecommunication Union}, ``Recommendation itu-r p.1238-10,''
@@ -53,6 +53,11 @@ M.~Dipperstein, ``Hamming (7,4) code discussion and implementation,''
 {National Instruments Corporation}, ``Labview nxg - national instruments,''
   \url{https://www.ni.com/en-no/shop/labview/labview-nxg.html}, (Accessed on
   05/03/2020).
+
+\bibitem{viterbi}
+A.~{Viterbi}, ``Nonlinear estimation of psk-modulated carrier phase with
+  application to burst digital transmission,'' \emph{IEEE Transactions on
+  Information Theory}, vol.~29, no.~4, pp. 543--551, 1983.
 
 \bibitem{signalAnalyzer}
 {MathWorks}, ``Using signal analyzer app - matlab,''

@@ -1,15 +1,15 @@
 % !TEX root = main.tex
 \section{Measurements and Verification}
 \label{sec:verification}
-In this section we present measurements and verifications of the proposed system. We first present a verification of the system specifications, such as bandwidth and power, in section \ref{sec:specs_verification}. In section \ref{sec:perf_meas} the system performance will be evaluated under different conditions, and the key parameters BER and EVM will be presented.
+In this section we present measurements and verifications of the proposed system. We first present a verification of the system specifications in section \ref{sec:specs_verification}. In section \ref{sec:perf_meas} the system performance will be evaluated under different conditions, and some key performance parameters will be presented.
 
 \subsection{Verification of System Parameters}
 \label{sec:specs_verification}
 The verified system specifications is summarised in table \ref{tab:meas_specs}.
 \input{measured_specifications.tex}
 
-The signal bandwidth was analyzed using MATLAB's signal analyzer toolbox \cite{signalAnalyzer}. The resulting power spectrum is shown in figure \ref{fig:pwr_spectrum}. The -60dBc bandwidth is measured to $\measBW \si{kHz}$.
-The transmit power was verified by first calibrating the USRP power spectral density using a spectrum analyser, and then calculating the total transmit power from measured bandwidth\footnote{Due to the CIVID-19 situation the lab equipment was not available for measurements on the implemented system}. This way, the transmit power was measured $\measPWR \si{dBm}$.
+The power spectrum of the signal was analyzed in MATLAB's signal analyzer toolbox \cite{signalAnalyzer}. The baseband power spectrum is shown in figure \ref{fig:pwr_spectrum} together with the theoretical spectrum. The -40dBc bandwidth is measured to $\measBW \si{kHz}$.
+The transmit power was verified by first calibrating the USRP power spectral density using a spectrum analyser, and then calculating the total transmit power from measured bandwidth\footnote{Due to the CIVID-19 situation the lab equipment was not available for measurements on the implemented system}. This way, the transmit power was measured to $\measPWR \si{dBm}$.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -23,27 +23,32 @@ The system delay was measured by transmitting a known bit sequence and evaluatin
 
 \subsection{Performance Measurements}
 \label{sec:perf_meas}
-The system is tested in an indoor environment with both USRP's at the same altitude, 1 meter apart and no polarization mismatch\footnote{The measurements had to be performed in a tiny student apartment because the lab was closed}. As the system us designed to change quality level depending on the state of the radio channel, different radio channels should be used when verifying the system performance. However, for the sake of reproducibility, we chose to vary the received SNR by adjusting the transmit power instead of changing the radio channel. Two different transmit power levels was used to verify transmission at both qualities. High quality transmission was measured with a transmit power of $\measPWR \si{dBm}$ and low quality with $\measPWRbad \si{dBm}$. 
+The system is tested in an indoor environment with both USRP's at the same height, 1 meter apart and no polarization mismatch\footnote{The measurements had to be performed in a tiny student apartment because the lab was closed}. For the sake of reproducibility, we chose to simulate the varying state of the radio channel by adjusting the transmit power instead of changing the radio channel physically. Two different transmit power levels was used to verify transmission at both qualities. High quality transmission was measured with a transmit power of $\measPWR \si{dBm}$ and low quality with $\measPWRbad \si{dBm}$. 
 
-Eye diagram and constellation diagram is provided for both transmit power levels and both modulation formats, together with some key performance measurements. For each transmit power level, the BER is calculated by transmission of a known bit sequence and the average EVM is calculated from constellation diagram, normalised to the peak signal power. 
-
-The diagrams for high and low transmit power are summarised in figure \ref{fig:good_diagrams} and \ref{fig:bad_diagrams} respectively. Calculated performance parameters are summarised in table \ref{tab:meas_params_good} and \ref{tab:meas_params_bad} for high and low transmit power respectively.
+Eye diagram and constellation diagram is provided for both transmit power levels and both modulation formats, together with some key performance measurements. The diagrams for high and low transmit power are summarised in figure \ref{fig:good_diagrams} and \ref{fig:bad_diagrams} respectively. Estimated performance parameters are summarised in table \ref{tab:meas_params_good} and \ref{tab:meas_params_bad} for high and low transmit power respectively. In the tables, BER is the true measured bit error rate and error vector magnitude (EVM) and SNR is estimated from the constellation diagrams. EVM is the average magnitude of the error vector normalized to the peak constellation power. \ebnot is estimated using the measured -40dBc bandwidth for noise power.
 
 \input{eyeAndConstGood.tex}
 \input{eyeAndConstBad.tex}
 \input{measured_parameters_good.tex}
 \input{measured_parameters_bad.tex}
 
+Figure \ref{fig:ber_vs_snr} shows the measured BER as a function of estimated \ebnot. This value is compared to a theoretical BER (Estimated BER) to give an impression of the system performance under the given conditions.
+\input{ber_vs_snr.tex}
+
+\input{QAMBarker}
+
 \subsection{Discussion of Obtained Results}
+% Brief description of overall system performance
 The proposed system is supposed to broadcast speech data with adaptable sound quality, by switching between QPSK and QAM-16 modulation based on the detected error rates. During the full system test, the threshold for changing state was set to \BERThreshold. With this threshold, the system changed quality state when the transmit power was reduced to about $\BERPowerLimit$ dBm. The test verified that the adaptable quality feature works as expected. The measured $\measDelay \si{ms}$ delay show that the system is well suited for two-way communication as well as broadcasting. 
 
+% Short comment on power spectrum
+Figure \ref{fig:pwr_spectrum} shows that the measured power spectrum lies very close to the theoretical spectrum. This indicates that the amount of nonlinear distortion introduced by the RF hardware is at a minimum.
+
+% Short qualitative description of behaviour under QPSK modulation
 When transmitting QPSK modulated data at low data rate, the system delivered almost noise free sound, at both power levels. The sound quality was not audibly reduced by the transmission. Figure \ref{fig:good_diagrams} and \ref{fig:bad_diagrams} and table \ref{tab:meas_params_good} and \ref{tab:meas_params_bad} supports this qualitative description. 
 
-The transmission of QAM-16 modulated data was not equally successful. At the highest power level, the sound was clearly audible, and spoken words recognizable, but the sound was covered in noise. At the lowest power level the sound was almost completely lost in noise. This result is again supported by figure \ref{fig:good_diagrams} and \ref{fig:bad_diagrams} and table \ref{tab:meas_params_good} and \ref{tab:meas_params_bad}. The constellation diagram in figure \ref{fig:good_diagrams} (b) shows a higher noise level for QAM-16 than for QPSK, which is also reflected by the EVM. The constellation also shows that the accuracy is worse for the symbols with strongest amplitude. The constellation is also slightly rotated, showing that the phase synchronization algorithm was not as accurate on the QAM-16 symbols as for QPSK. 
+% Discussion of QAM-16 results
+The transmission of QAM-16 modulated data was not equally successful. At the highest power level, the transmitted speech was barely audible. At the lowest power level the sound was completely lost in noise. This result is again supported by figure \ref{fig:good_diagrams} and \ref{fig:bad_diagrams} and table \ref{tab:meas_params_good} and \ref{tab:meas_params_bad}. The constellation diagram in figure \ref{fig:good_diagrams} (b) shows that the poor quality is mainly due to bad phase synchronization. Figure \ref{fig:QAMBarker} shows a comparison of the QAM-16 constellation with all frame symbols (a), and with the Barker symbols only (b). As the figure shows, the Barker symbols have no visible phase shift, which indicates that there is a phase difference between the Barker symbols and the rest of the frame. The reason for this problem is not understood by the authors and the issue remains for future improvements.
 
-One major advantage of QPSK modulation is the constant symbol amplitude, which reduces nonlinear effects in the amplifiers of the USRP. For QAM-16, the amplitude is not constant, which is giving rise to nonlinear effects in the RF Hardware. The nonlinear effects tend to increase with amplitude, which is in line with the constellation of figure \ref{fig:good_diagrams} (b). We therefore suspect that these nonlinear effects is a major reason for the poor system performance with QAM-16 modulation. Figure \ref{fig:good_diagrams} (b) also show that the corner symbols seem to be suffering the most from these nonlinearities. As the training sequence used for phase synchronization is transmitted at these corners only, this may explain why the phase is inaccurately estimated. 
-
-For further verification of the system, more reliable hardware should be considered in order to reduce the nonlinear effects. To make the phase estimation more robust one could also reduce the amplitude of the training symbols.  
-
-
-
+% Comment on BER vs Eb/N0 plot
+ADD COMMENT ON BER VS Eb/N0

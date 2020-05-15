@@ -110,15 +110,17 @@
 
 
 % ------------------------ MEASUREMENTS -----------------------------%
-\newcommand{\measBW}{232} %kHz, -60dBc
+\newcommand{\measBW}{220.6} %kHz, -40dBc
 \newcommand{\measPWR}{-10} %dBm
 \newcommand{\measPWRbad}{-25} %dBm
 \newcommand{\measDelay}{5} %ms
 \newcommand{\measDelayStd}{2} %ms
 \newcommand{\measDelaySwitch}{40} %ms
 
-\newcommand{\measSNRGood}{15} %dB
-\newcommand{\measSNRBad}{8} %dB
+\newcommand{\measSNRQPSKGood}{18.1} %dB
+\newcommand{\measSNRQAMGood}{12.8} %dB
+\newcommand{\measSNRQPSKBad}{15.9} %dB
+\newcommand{\measSNRQAMBad}{10.16} %dB
 \newcommand{\measEVMGood}{-9} %dB
 \newcommand{\measEVMBad}{-4} %dB
 \newcommand{\measBERQPSKGood}{$1.35\cdot10^{-5}$} 
@@ -142,7 +144,7 @@
 
 \maketitle
 \begin{abstract} 
-This paper is presenting the design and implementation of a radio communication system for broadcasting of speech, with adaptable data rate. This system is to be seen as a "proof of concept", where the main goal is to demonstrate a radio system with feedback from receiver (RX) to transmitter (TX) such that the transmitted data rate adapts to the state of the radio channel. The data rate is varied by a factor 2 by switching between QPSK and QAM-16 modulation, while bandwidth and transmit power is fixed. The proposed system is implemented with a -60dBc bandwidth of \measBW kHz and a transmit power of \measPWR dBm.
+This paper is presenting the design and implementation of a radio communication system for broadcasting of speech, with adaptable data rate. This system is to be seen as a "proof of concept", where the main goal is to demonstrate a radio system with feedback from receiver (RX) to transmitter (TX) such that the transmitted data rate adapts to the state of the radio channel. The data rate is varied by a factor 2 by switching between QPSK and QAM-16 modulation, while bandwidth and transmit power is fixed. The proposed system is implemented with a -40dBc bandwidth of \measBW kHz and a transmit power of \measPWR dBm.
 
 The adaptive quality feature is verified and the system changes quality immediately when the detected error rate drops below a predefined threshold. The measured bit error rates are \measBERQAMGood  and \measBERQPSKBad for high and low data rates respectively. The total delay from transmitter to receiver is measured to \measDelay ms, making the system well suited the for two-way communication as well as broadcasting. 
 \end{abstract}
