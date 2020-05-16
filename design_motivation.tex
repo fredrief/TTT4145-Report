@@ -29,7 +29,7 @@ The draw back is that there will be some delay from the receiver ask for a chang
 
 \item
 The transmitter decides when to change state and the receiver continuously send information about detected error rate to the transmitter. This requires information about the state to be contained in the data packet and the receiver will need more complexity in order to determine the incoming modulation format. 
-However, this will eliminate the senario when the transmitter and the receiver are in different states. 
+However, this will eliminate the risk of having the transmitter and the receiver are in different states. 
 \end{enumerate}
 We chose to implement the second solution. The state information is kept in the two different Barker sequences. Because we would have to search for one Barker sequence in the frame synchronisation anyway, searching for one more would be both computationally fast and easy to implement. In addition, the good autocorrelation properties of the Barker sequence makes the state information robust against noise, and no extra FEC is needed to keep this information safe. 
 

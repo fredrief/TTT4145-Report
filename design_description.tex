@@ -25,7 +25,7 @@ The training sequence is added to both I and Q symbols in the block \textit{Add 
 
 In the last step before transmission, the symbols are upsampled by a factor $\sps$ and filtered with a pulse shaping filter. The filter is Root Raised Cosine with a roll-off factor of 0.3. The same filter is applied as a matched filter in the first step at the receive side before the samples are downsampled again. 
 
-The USRP is configured to transmit continuously with a symbol rate of $\symbolRateQPSK$ symbols per second and transmit arrays of zeros when no data is available. The USRP interface is implemented using the NI-USRP DLL \cite{labviewDLL}.
+The USRP is configured to transmit continuously with a symbol rate of $\symbolRateQPSK$ symbols per second and transmit arrays of zeros when no data is available. A 100ms buffer is used on both TX and RX side of the USRP. The USRP interface is implemented using the NI-USRP DLL \cite{labviewDLL}.
 
 Symbol synchronisation is done by choosing the sample offset that maximizes the signal energy. 
 

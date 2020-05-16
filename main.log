@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.11.14)  15 MAY 2020 16:46
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.11.14)  16 MAY 2020 09:18
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1525,11 +1525,10 @@ Overfull \hbox (8.13101pt too wide) in paragraph at lines 51--52
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.42 T
-      he estimate is obtained in two stages, referred to as the \textit{pred...
- <./qpsk_mapping.pdf> <./qam16mapping.pdf>]) (./design_motivation.tex [4pdfTeX 
-warning (ext4): destination with the same identifier (name{figure.6}) has been 
-already used, duplicate ignored
+l.41 
+      <./qpsk_mapping.pdf> <./qam16mapping.pdf>]) (./design_motivation.tex
+[4pdfTeX warning (ext4): destination with the same identifier (name{figure.6}) 
+has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
@@ -1558,11 +1557,11 @@ File: constellationQAMgood.png Graphic file (type png)
 <use constellationQAMgood.png>
 Package pdftex.def Info: constellationQAMgood.png  used on input line 10.
 (pdftex.def)             Requested size: 113.39923pt x 113.3878pt.
-<eyeQPSKgood.png, id=236, 1363.0925pt x 923.45pt>
+<eyeQPSKgood.png, id=236, 1300.86pt x 923.45pt>
 File: eyeQPSKgood.png Graphic file (type png)
 <use eyeQPSKgood.png>
 Package pdftex.def Info: eyeQPSKgood.png  used on input line 15.
-(pdftex.def)             Requested size: 113.39923pt x 76.82246pt.
+(pdftex.def)             Requested size: 113.39923pt x 80.48604pt.
 <eyeQAMgood.png, id=237, 1284.8pt x 923.45pt>
 File: eyeQAMgood.png Graphic file (type png)
 <use eyeQAMgood.png>
@@ -1625,11 +1624,11 @@ File: constellationQAMgood.png Graphic file (type png)
 <use constellationQAMgood.png>
 Package pdftex.def Info: constellationQAMgood.png  used on input line 6.
 (pdftex.def)             Requested size: 113.39923pt x 113.3878pt.
-<QAMbarker.png, id=260, 345.29pt x 321.2pt>
+<QAMbarker.png, id=259, 923.45pt x 923.45pt>
 File: QAMbarker.png Graphic file (type png)
 <use QAMbarker.png>
 Package pdftex.def Info: QAMbarker.png  used on input line 10.
-(pdftex.def)             Requested size: 113.39923pt x 105.4866pt.
+(pdftex.def)             Requested size: 113.39923pt x 113.3878pt.
 ) [6pdfTeX warning (ext4): destination with the same identifier (name{figure.9}
 ) has been already used, duplicate ignored
 
@@ -1670,8 +1669,8 @@ l.52
  copy)> <./eyeQPSKgood.png (PNG copy)> <./eyeQAMgood.png (PNG copy)> <./constel
 lationQPSKbad.png (PNG copy)> <./constellationQAMbad.png (PNG copy)> <./eyeQPSK
 bad.png (PNG copy)> <./eyeQAMbad.png (PNG copy)> <./BERvsSNRQPSK.png (PNG copy)
-> <./BERvsSNRQAM.png (PNG copy)> <./QAMbarker.png>]) (./conclusion.tex)
-(./main.bbl
+> <./BERvsSNRQAM.png (PNG copy)> <./QAMbarker.png (PNG copy)>])
+(./conclusion.tex) (./main.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 29--32
 []\OT1/ptm/m/n/8 TE Con-nec-tiv-ity, ``Rf coax-ial con-nec-tors,'' []$https : /
  / www . mouser .
@@ -1749,7 +1748,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 185.
 Here is how much of TeX's memory you used:
  50517 strings out of 492616
  1235042 string characters out of 6129480
- 1525681 words of memory out of 5000000
+ 1526681 words of memory out of 5000000
  53658 multiletter control sequences out of 15000+600000
  574083 words of font info for 99 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1771,10 +1770,10 @@ fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2019/texmf-dist/fonts/ty
 pe1/urw/times/utmb8a.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/urw/ti
 mes/utmbi8a.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/urw/times/utmr8
 a.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (8 pages, 1952019 bytes).
+Output written on main.pdf (8 pages, 2447129 bytes).
 PDF statistics:
- 393 PDF objects out of 1000 (max. 8388607)
- 345 compressed objects within 4 object streams
+ 390 PDF objects out of 1000 (max. 8388607)
+ 343 compressed objects within 4 object streams
  88 named destinations out of 1000 (max. 500000)
  277 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -19,7 +19,7 @@ The transmit power was verified by first calibrating the USRP power spectral den
 \end{center}
 \end{figure}
 
-The system delay was measured by transmitting a known bit sequence and evaluating the time delay from sound producer to sound consumer. The delay was measured by running both the transmitter and receiver software on the same computer. The average measured delay was $\measDelay \si{ms}$ with a sample standard deviation of $\measDelayStd \si{ms}$.  
+The system delay was measured by transmitting a known bit sequence and evaluating the time delay from sound producer to sound consumer. The delay was measured by running both the transmitter and receiver software on the same computer. The average measured delay was $\measDelay \si{ms}$ with a sample standard deviation of $\measDelayStd \si{ms}$. 200ms of this delay originates from the buffers of the USRP.
 
 \subsection{Performance Measurements}
 \label{sec:perf_meas}
@@ -32,7 +32,7 @@ Eye diagram and constellation diagram is provided for both transmit power levels
 \input{measured_parameters_good.tex}
 \input{measured_parameters_bad.tex}
 
-Figure \ref{fig:ber_vs_snr} shows the measured BER as a function of estimated \ebnot. This value is compared to a theoretical BER (Estimated BER) to give an impression of the system performance under the given conditions.
+Figure \ref{fig:ber_vs_snr} shows the measured BER as a function of estimated \ebnot. This value is compared to a theoretical BER (Estimated BER) to give an impression of the system performance under the given conditions. The BER is measured with $10^4$ frames of $1150$ bit each, making $8.7\cdot10^{-8}$ the smallest detectable BER. The estimated BER is based on white Gaussian noise only.
 \input{ber_vs_snr.tex}
 
 \input{QAMBarker}
@@ -51,4 +51,7 @@ When transmitting QPSK modulated data at low data rate, the system delivered alm
 The transmission of QAM-16 modulated data was not equally successful. At the highest power level, the transmitted speech was barely audible. At the lowest power level the sound was completely lost in noise. This result is again supported by figure \ref{fig:good_diagrams} and \ref{fig:bad_diagrams} and table \ref{tab:meas_params_good} and \ref{tab:meas_params_bad}. The constellation diagram in figure \ref{fig:good_diagrams} (b) shows that the poor quality is mainly due to bad phase synchronization. Figure \ref{fig:QAMBarker} shows a comparison of the QAM-16 constellation with all frame symbols (a), and with the Barker symbols only (b). As the figure shows, the Barker symbols have no visible phase shift, which indicates that there is a phase difference between the Barker symbols and the rest of the frame. The reason for this problem is not understood by the authors and the issue remains for future improvements.
 
 % Comment on BER vs Eb/N0 plot
-ADD COMMENT ON BER VS Eb/N0
+The BER vs. \ebnot\ plots of figure \ref{fig:ber_vs_snr} gives an indication of how well the system performs under the given noise conditions, by comparing the measured BER to estimated BER, assuming white Gaussian noise only. For the QPSK modulated signal, the measured BER is higher than estimated for low \ebnot, and approaches the theoretical value as \ebnot increase. This is because the frequency and phase synchronization algorithms get less accurate as the noise level increase, which introduces more errors than what is obtained from AWGN only. For the QAM-16 modulation, the BER is constantly above the theoretical value, mostly because of the poor phase synchronization discussed previously. 
+
+
+
