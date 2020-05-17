@@ -1,0 +1,22 @@
+This is BibTeX, Version 0.99dThe top-level auxiliary file: main.aux
+The style file: IEEEtran.bst
+White space in argument---line 149 of file main.aux
+ : \bibdata{IEEEabrv,
+ :                    references}
+I'm skipping whatever remains of this command
+Database file #1: IEEEabrv.bib
+Warning--I didn't find a database entry for "USRP2901"
+Warning--I didn't find a database entry for "rfconnector"
+Warning--I didn't find a database entry for "antenna"
+Warning--I didn't find a database entry for "itu_model"
+Warning--I didn't find a database entry for "WinAPI"
+Warning--I didn't find a database entry for "hamming"
+Warning--I didn't find a database entry for "labviewDLL"
+Warning--I didn't find a database entry for "viterbi"
+Warning--I didn't find a database entry for "signalAnalyzer"
+-- IEEEtran.bst version 1.14 (2015/08/26) by Michael Shell.
+-- http://www.michaelshell.org/tex/ieeetran/bibtex/
+-- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
+
+Done.
+(There was 1 error message)

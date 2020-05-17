@@ -1,19 +1,19 @@
 % !TEX root = main.tex
 \section{Link Budget}
 \label{sec:link_budget}
-The link budget for the system is shown in table \ref{tab:link_budget}. The system is designed to operate indoors with a distance of 5 meters between transmitter and receiver. Table \ref{tab:link_budget} shows losses from propagation, loss in TX and RX and some estimated key parameters at the receiver. 
+The link budget for the system is shown in table \ref{tab:link_budget}. The system is designed to operate indoors with a distance of 5 meters between transmitter and receiver. Table \ref{tab:link_budget} shows losses from propagation, loss in TX and RX, and some estimated key parameters at the receiver. 
 
-In this demonstration, the transmit power is varied in order to simulate changes in the radio channel, while the physical radio link is fixed. Hence no fading statistics is included in the link budget. The stated values are based on the transmit power used for high data rate transmission, corresponding to the best simulated state of the radio channel. 
+In this demonstration, the transmit power is varied in order to simulate changes in the radio channel while the physical radio link is fixed. Hence no fading statistics is included in the link budget. The stated values are based on the transmit power used for high data rate transmission corresponding to the best simulated state of the radio channel. 
 
 \input{link_budget.tex}
 
-The value for connector loss is taken from the data sheet of a standard coaxial RF connector \cite{rfconnector}. The antenna gain value is taken from the data sheet \cite{antenna}.The transmit power, $P_{PA}$, was adjusted after measurements to obtain appropriate $E_b/N_0$ at the receiver.
+The value for connector loss is taken from the data sheet of a standard coaxial RF connector \cite{rfconnector}. The antenna gain value is taken from the data sheet \cite{antenna}.The transmit power, $P_{PA}$, was adjusted after measurements to obtain appropriate $\nicefrac{E_b}{N_0}$ at the receiver.
 
 The estimated path loss constitutes solely of the propagation loss obtained from the ITU Indoor Propagations Loss Model \cite{itu_model}. The loss model consists of two adjustable factors, the distance power loss coefficient, $N$, and the floor loss penetration factor, $P_f(n)$. The latter is set to 0, and the former was set to 38 after calibrating the test environment. Figure \ref{fig:path_loss} shows the measured path loss and the prediction from the ITU model before and after adjusting the power loss coefficient.
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=\figW\linewidth]{PathLoss.png}
+\includegraphics[width=0.85\linewidth]{PathLoss.png}
 \caption{Measured path loss vs. estimated path loss from the ITU Indoor Propagations Loss Model, before and after adjusting the power loss coefficient}
 \label{fig:path_loss}
 \end{center}

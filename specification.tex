@@ -1,13 +1,15 @@
 % !TEX root = main.tex
 \section{System Specifications}
 \label{sec:specifications}
-The proposed radio communication system is designed to switch between QPSK and QAM-16 modulation in order to obtain adaptable sound quality. The system use the 2.4GHz ISM band with a carrier frequency of 2.415GHz and 2.455GHz for the data path and BER path respectively. The system is designed for a transmission distance of 5 meter in an indoor environment. 
+The proposed radio communication system is designed to switch between QPSK and QAM-16 modulation in order to obtain adaptable sound quality. The system use the \SI{2.4}{\giga\hertz} ISM band with a carrier frequency of \SI{2.415}{\giga\hertz} and \SI{2.455}{\giga\hertz} for the data path and BER path respectively. The system is designed for a transmission distance of 5 meter in an indoor environment. 
 
-Some key system specifications are listed in table \ref{tab:specs_data} and \ref{tab:specs_ber}. Table \ref{tab:specs_data} shows the parameters for the data path, for low / high data rate transmission. Table \ref{tab:specs_ber} shows parameters for the simpler BER path. 
+Some key system specifications are listed in table~\ref{tab:specs_data} and \ref{tab:specs_ber}. Table~\ref{tab:specs_data} shows the parameters for the data path, for low / high data rate transmission. Table \ref{tab:specs_ber} shows parameters for the simpler BER path. 
 \input{specs.tex}
 
-The burst format for the transmitted data is shown in figure \ref{fig:burst_format}. The bursts are different when using QPSK and QAM-16 modulation, because the same number of training symbols maps to a different number of bits. The data packets (a and b) is transmitted continuously with the indicated guard period. The BER packets is very small compared to the data packets, and is only transmitted ones per received data packet. Thus no guard period is specified for these packets. 
+The burst format for the transmitted data is shown in figure~\ref{fig:burst_format}.
+\newpage
+ The bursts are different when using QPSK and QAM-16 modulation because the same number of training symbols maps to a different number of bits. The data packets (a and b) are transmitted continuously with the indicated guard period. The BER packets are very small compared to the data packets and are only transmitted once per received data packet. Thus no guard period is specified for these packets. 
 
-Note that this system is implemented with constant payload size, which means that the packet rate is varied when the data rate changes.
+Note that this system is implemented with constant payload size which means that the packet rate is varied when the data rate changes.
 
 \input{burst_format.tex} 

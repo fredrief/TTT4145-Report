@@ -7,12 +7,23 @@
 % Math
 \usepackage{amsmath}
 \DeclareMathOperator\erfc{erfc}
-
+\usepackage{nicefrac}
 % For tables
 \usepackage[table]{xcolor}
 \usepackage{tabularx, booktabs}
 \usepackage{multirow}
 
+% Units
+\usepackage{siunitx}
+\sisetup{
+    exponent-product = \cdot,
+    separate-uncertainty = true,
+    per-mode = symbol,
+    group-digits = false,
+    detect-weight=true, 
+    detect-family=true,
+    detect-all
+}
 % Tikz
 \usepackage[europeanresistors,americaninductors, americancurrents, american voltages, siunitx]{circuitikz}
 \usepackage{tikz}
@@ -123,10 +134,10 @@
 \newcommand{\measSNRQAMBad}{10.16} %dB
 \newcommand{\measEVMGood}{-9} %dB
 \newcommand{\measEVMBad}{-4} %dB
-\newcommand{\measBERQPSKGood}{$1.35\cdot10^{-6}$} 
-\newcommand{\measBERQAMGood}{$6.0\cdot10^{-2}$} 
-\newcommand{\measBERQPSKBad}{$1.4\cdot10^{-5}$} 
-\newcommand{\measBERQAMBad}{$1.32\cdot10^{-1}$} 
+\newcommand{\measBERQPSKGood}{\SI{1.35e-6}{\;}} 
+\newcommand{\measBERQAMGood}{\SI{6.0e-2}{\;}} 
+\newcommand{\measBERQPSKBad}{\SI{1.4e-5}{\;}} 
+\newcommand{\measBERQAMBad}{\SI{1.32e-1}{\;}} 
 
 
 % ------------------------ Document Variables ---------------------------- % 
@@ -144,9 +155,9 @@
 
 \maketitle
 \begin{abstract} 
-This paper is presenting the design and implementation of a radio communication system for broadcasting of speech, with adaptable data rate. This system is to be seen as a "proof of concept", where the main goal is to demonstrate a radio system with feedback from receiver (RX) to transmitter (TX) such that the transmitted data rate adapts to the state of the radio channel. The data rate is varied by a factor 2 by switching between QPSK and QAM-16 modulation, while bandwidth and transmit power is fixed. The proposed system is implemented with a -40dBc bandwidth of \measBW kHz and a transmit power of \measPWR dBm.
+This paper is presenting the design and implementation of a radio communication system for broadcasting of speech with adaptable data rate. This system is to be seen as a "proof of concept", where the main goal is to demonstrate a radio system with feedback from receiver (RX) to transmitter (TX) such that the transmitted data rate adapts to the state of the radio channel. The data rate is varied by a factor 2 by switching between QPSK and QAM-16 modulation while bandwidth and transmit power are fixed. The proposed system is implemented with a \SI{-40}{dBc} bandwidth of \SI{\measBW}{\kilo\hertz} and a transmit power of \SI{\measPWR}{dBm}.
 
-The adaptive quality feature is verified and the system changes quality immediately when the detected error rate drops below a predefined threshold. The measured bit error rates are \measBERQAMGood  and \measBERQPSKBad for high and low data rates respectively. The total delay from transmitter to receiver is measured to \measDelay ms, making the system well suited the for two-way communication as well as broadcasting. 
+The adaptive quality feature is verified and the system changes quality immediately when the detected error rate drops below a predefined threshold. The measured bit error rates are \measBERQAMGood  and \measBERQPSKBad for high and low data rates respectively. The total delay from transmitter to receiver is measured to \SI{\measDelay}{\milli\second}, making the system well suited the for two-way communication as well as broadcasting. 
 \end{abstract}
 
 % INTRODUCTION
@@ -158,6 +169,7 @@ The adaptive quality feature is verified and the system changes quality immediat
 % LINK BUDGET 
 \input{link_budget_sec.tex}
 
+\newpage
 % DESIGN DESCRIPTION
 \input{design_description.tex}
 
